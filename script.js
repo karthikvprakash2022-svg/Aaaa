@@ -126,7 +126,7 @@ if (yesBtn && noBtn) {
 
 // ==============================
 // NO BUTTON
-// MOVE 5 TIMES, THEN BLANK PAGE
+// MOVE 5 TIMES, THEN SHOW MESSAGE
 // ==============================
 
 if (noBtn) {
@@ -136,11 +136,54 @@ if (noBtn) {
 
     if (isBlank) return;
 
-    // Blank page on 6th click
+    // Show emotional message on 6th click
     if (noClickCount >= 5) {
       isBlank = true;
-      document.body.innerHTML = "";
-      document.body.style.background = "#ffffff";
+
+      document.body.innerHTML = `
+        <div style="
+          position: fixed;
+          inset: 0;
+          background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          padding: 25px;
+          box-sizing: border-box;
+          font-family: Arial, sans-serif;
+        ">
+          <div style="
+            background: white;
+            padding: 35px 25px;
+            border-radius: 25px;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+          ">
+            <h1 style="color: #ff1744;">
+              You Said NO... 💔
+            </h1>
+
+            <p style="
+              color: #444;
+              font-size: 20px;
+              line-height: 1.7;
+            ">
+              But no matter what, you'll always be special to me. ❤️
+            </p>
+
+            <h2 style="color: #ff1744;">
+              Happy Birthday, Aruna! 🥺🎂
+            </h2>
+
+            <p style="color: #888;">
+              With love, Karthik ❤️
+            </p>
+          </div>
+        </div>
+      `;
+
+      document.body.style.background = "#ffdde1";
       return;
     }
 
