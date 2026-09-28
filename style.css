@@ -317,3 +317,14 @@ body {
     height: 350px;
   }
 }
+
+/* MAKE INSTAGRAM AND WHATSAPP LINKS CLICKABLE */
+
+.main-frame .Picture-note a {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 99999;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: underline;
+}
