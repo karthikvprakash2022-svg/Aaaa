@@ -1,36 +1,105 @@
+const page1 = document.getElementById("page1");
+const page2 = document.getElementById("page2");
+const page3 = document.getElementById("page3");
+
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
+
 const hiddenPages = document.getElementById("hiddenPages");
 const yesMessage = document.getElementById("yesMessage");
 
-let zIndex = 10;
+let currentPage = 1;
 let noClicks = 0;
+let zIndex = 10;
 
-// FIRST 2 PHOTOS + QUESTION CARD
-const firstCards = [...document.querySelectorAll(
-  '.Picture[data-page]'
-)];
+// ---------------------------------
+// INITIAL PAGE SETUP
+// ---------------------------------
 
-firstCards.forEach((card, index) => {
-  card.style.zIndex = zIndex++;
+page1.hidden = false;
+page2.hidden = true;
+page3.hidden = true;
 
-  const positions = [
-    { x: -35, y: -18, r: -5 },
-    { x: 35, y: 18, r: 5 },
-    { x: 0, y: 0, r: 0 }
-  ];
+page1.style.zIndex = zIndex++;
+page2.style.zIndex = zIndex++;
+page3.style.zIndex = zIndex++;
 
-  const p = positions[index];
+// ---------------------------------
+// SWIPE BETWEEN FIRST TWO PAGES
+// ---------------------------------
 
-  card.style.left = `${p.x}px`;
-  card.style.top = `${p.y}px`;
-  card.style.transform =
-    `translate(-50%, -50%) rotate(${p.r}deg)`;
+function showNextPage() {
+  if (currentPage === 1) {
+    page1.hidden = true;
+    page2.hidden = false;
+    currentPage = 2;
+  } else if (currentPage === 2) {
+    page2.hidden = true;
+    page3.hidden = false;
+    currentPage = 3;
+  }
+}
 
-  enableDrag(card);
+function enableSwipe(page) {
+  let startX = 0;
+  let startY = 0;
+
+  page.addEventListener("pointerdown", (event) => {
+    startX = event.clientX;
+    startY = event.clientY;
+  });
+
+  page.addEventListener("pointerup", (event) => {
+    const diffX = event.clientX - startX;
+    const diffY = event.clientY - startY;
+
+    if (
+      Math.abs(diffX) > 60 &&
+      Math.abs(diffX) > Math.abs(diffY)
+    ) {
+      showNextPage();
+    }
+  });
+}
+
+enableSwipe(page1);
+enableSwipe(page2);
+
+// ---------------------------------
+// YES BUTTON: REVEAL ALL PHOTOS
+// ---------------------------------
+
+yesBtn.addEventListener("click", (event) => {
+  event.stopPropagation();
+
+  hiddenPages.hidden = false;
+
+  const cards = hiddenPages.querySelectorAll(".Picture");
+
+  cards.forEach((card) => {
+    card.style.zIndex = zIndex++;
+
+    card.style.left = `${Math.random() * 180 - 90}px`;
+    card.style.top = `${Math.random() * 180 - 90}px`;
+
+    card.style.transform =
+      `translate(-50%, -50%) rotate(${Math.random() * 24 - 12}deg)`;
+
+    enableDrag(card);
+  });
+
+  noBtn.hidden = true;
+  yesMessage.hidden = false;
+
+  setTimeout(() => {
+    yesMessage.hidden = true;
+  }, 3000);
 });
 
-// DRAG PHOTOS
+// ---------------------------------
+// DRAG REVEALED PHOTOS
+// ---------------------------------
+
 function enableDrag(card) {
   let dragging = false;
   let startX = 0;
@@ -38,9 +107,10 @@ function enableDrag(card) {
   let initialLeft = 0;
   let initialTop = 0;
 
+  card.style.touchAction = "none";
+
   card.addEventListener("pointerdown", (event) => {
-    if (event.target.closest(".choice-buttons")) return;
-    if (card.classList.contains("choice-card")) return;
+    if (event.target.closest("button")) return;
 
     dragging = true;
     card.setPointerCapture(event.pointerId);
@@ -72,39 +142,10 @@ function enableDrag(card) {
   card.addEventListener("lostpointercapture", stopDragging);
 }
 
-// YES BUTTON: REVEAL ALL HIDDEN PHOTOS
-yesBtn.addEventListener("click", (event) => {
-  event.stopPropagation();
+// ---------------------------------
+// NO BUTTON: MOVE AND SHOW MESSAGE
+// ---------------------------------
 
-  hiddenPages.hidden = false;
-
-  const hiddenCards =
-    hiddenPages.querySelectorAll(".Picture");
-
-  hiddenCards.forEach((card, index) => {
-    card.style.zIndex = zIndex++;
-
-    card.style.left =
-      `${Math.random() * 180 - 90}px`;
-
-    card.style.top =
-      `${Math.random() * 180 - 90}px`;
-
-    card.style.transform =
-      `translate(-50%, -50%) rotate(${Math.random() * 24 - 12}deg)`;
-
-    enableDrag(card);
-  });
-
-  noBtn.hidden = true;
-  yesMessage.hidden = false;
-
-  setTimeout(() => {
-    yesMessage.hidden = true;
-  }, 3000);
-});
-
-// NO BUTTON
 noBtn.addEventListener("click", (event) => {
   event.stopPropagation();
 
@@ -115,8 +156,13 @@ noBtn.addEventListener("click", (event) => {
       <main class="no-ending">
         <section>
           <h1>You Said NO... 💔</h1>
-          <p>But no matter what, you'll always be special to me. ❤️</p>
+
+          <p>
+            But no matter what, you'll always be special to me. ❤️
+          </p>
+
           <h2>Happy Birthday, Aruna! 🥺🎂</h2>
+
           <p>With love, Karthik ❤️</p>
         </section>
       </main>
@@ -163,10 +209,13 @@ noBtn.addEventListener("click", (event) => {
   noBtn.style.position = "fixed";
   noBtn.style.left = `${15 + Math.random() * 70}%`;
   noBtn.style.top = `${12 + Math.random() * 70}%`;
-  noBtn.style.zIndex = "1000000";
+  noBtn.style.zIndex = "999999";
 });
 
+// ---------------------------------
 // PREVENT RIGHT CLICK AND IMAGE DRAG
+// ---------------------------------
+
 document.addEventListener("contextmenu", (event) => {
   event.preventDefault();
 });
