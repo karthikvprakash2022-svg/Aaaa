@@ -349,3 +349,8 @@ body {
   object-fit: cover;
   display: block;
 }
+
+.main-frame {
+  width: 280px;
+  height: 380px;
+}
