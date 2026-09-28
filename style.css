@@ -113,3 +113,28 @@ body {
   object-fit: cover;
   display: block;
 }
+.answer-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 10px;
+}
+
+.answer-buttons button {
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#yesBtn {
+  background: #ff4081;
+  color: white;
+}
+
+#noBtn {
+  background: #444;
+  color: white;
+}
