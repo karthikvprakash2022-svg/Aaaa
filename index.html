@@ -178,6 +178,56 @@ button {
     grid-template-columns: 1fr;
   }
 }
+
+/* Draggable photo stack */
+#gallery .gallery-grid {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  min-height: 480px;
+  max-width: 100%;
+  overflow: visible;
+  touch-action: none;
+}
+
+#gallery .gallery-grid .Picture {
+  position: absolute;
+  width: min(82vw, 350px);
+  margin: 0;
+  cursor: grab;
+  touch-action: none;
+  transition: box-shadow .2s ease;
+}
+
+#gallery .gallery-grid .Picture:active {
+  cursor: grabbing;
+}
+
+#noPage {
+  position: fixed;
+  inset: 0;
+  background: #2b2d42;
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 25px;
+}
+
+.no-message {
+  font-family: 'Caveat', cursive;
+  font-size: 35px;
+  color: #ffd6e7;
+  line-height: 1.5;
+}
+
+.no-message button {
+  margin-top: 25px;
+  background: #ff4d88;
+  color: white;
+}
 </style>
 </head>
 
@@ -185,21 +235,19 @@ button {
 
 <h1>Happy Birthday Aruna 🎂❤️</h1>
 
+<!-- FIRST THREE PHOTOS -->
 <div id="stage">
 
-  <!-- PHOTO 1 -->
   <div class="Picture" data-step="0">
     <img src="IMG_2495.jpeg" alt="Birthday photo 1">
     <div class="note">Happy 🎉❤️</div>
   </div>
 
-  <!-- PHOTO 2 -->
   <div class="Picture hidden" data-step="1">
     <img src="IMG_2491.jpeg" alt="Birthday photo 2">
     <div class="note">Birthday 🎂💕</div>
   </div>
 
-  <!-- PHOTO 3 + QUESTION -->
   <div class="Picture hidden" data-step="2">
     <img src="IMG_2496.jpeg" alt="Birthday photo 3">
     <div class="note">Celebrate 🎉💖</div>
@@ -220,7 +268,7 @@ button {
 
 </div>
 
-<!-- ALL REMAINING PHOTOS -->
+<!-- REMAINING PHOTOS -->
 <section id="gallery">
   <h2>Our Beautiful Memories ❤️</h2>
 
@@ -276,9 +324,9 @@ button {
       <div class="note">Hugs 💖🎂</div>
     </div>
 
-    <!-- ORIGINAL MAIN PHOTO CARD -->
     <div class="Picture Picture-video">
       <img src="002E8231-EEC9-4B09-ADD1-39DFD4191492.jpeg" alt="Our special photo">
+
       <div class="note">
         WITH LOVINGLY YOUR KARTHIK 💞🤗
       </div>
@@ -292,35 +340,46 @@ button {
   </div>
 </section>
 
+<!-- FULL-SCREEN NO MESSAGE -->
+<div id="noPage">
+  <div class="no-message">
+    Even if you say no, you will always have a special place in my heart. ❤️
+    <br><br>
+    Happy Birthday, Aruna! 💖
+    <br>
+    <button id="backBtn">Go Back ❤️</button>
+  </div>
+</div>
+
 <script>
 const cards = [...document.querySelectorAll('#stage .Picture')];
 const stage = document.getElementById('stage');
 const gallery = document.getElementById('gallery');
 const yesBtn = document.getElementById('yesBtn');
 const noBtn = document.getElementById('noBtn');
-const message = document.getElementById('message');
+const noPage = document.getElementById('noPage');
+const backBtn = document.getElementById('backBtn');
+
+const galleryGrid = gallery.querySelector('.gallery-grid');
+const galleryCards = [...galleryGrid.querySelectorAll('.Picture')];
 
 let current = 0;
-let startX = 0;
-let startY = 0;
 let noCount = 0;
+let topZ = 20;
 
+// Show one of the first three cards
 function showCard(index) {
   cards.forEach((card, i) => {
     card.classList.toggle('hidden', i !== index);
   });
 }
 
-function nextCard() {
-  if (current < 2) {
-    current++;
-    showCard(current);
-  }
-}
+// Swipe through the first three photos
+let startX = 0;
+let startY = 0;
 
 stage.addEventListener('pointerdown', (event) => {
   if (event.target.closest('button')) return;
-
   startX = event.clientX;
   startY = event.clientY;
 });
@@ -328,62 +387,121 @@ stage.addEventListener('pointerdown', (event) => {
 stage.addEventListener('pointerup', (event) => {
   if (event.target.closest('button')) return;
 
-  const diffX = event.clientX - startX;
-  const diffY = event.clientY - startY;
+  const dx = event.clientX - startX;
+  const dy = event.clientY - startY;
 
-  if (Math.abs(diffX) > 80 && Math.abs(diffX) > Math.abs(diffY)) {
-    nextCard();
+  if (Math.abs(dx) > 80 && Math.abs(dx) > Math.abs(dy)) {
+    if (current < 2) {
+      current++;
+      showCard(current);
+    }
   }
 });
 
+// YES: reveal the draggable stack
 yesBtn.addEventListener('click', () => {
   stage.style.display = 'none';
   gallery.style.display = 'block';
+
+  galleryCards.forEach((card, index) => {
+    card.classList.remove('hidden');
+
+    card.style.position = 'absolute';
+    card.style.width = 'min(82vw, 350px)';
+    card.style.left = '50%';
+    card.style.top = (15 + index * 3) + 'px';
+    card.style.margin = '0';
+    card.style.transform =
+      `translateX(-50%) rotate(${index % 2 === 0 ? 2 : -2}deg)`;
+    card.style.zIndex = index + 1;
+
+    makeDraggable(card);
+  });
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
+// Drag any photo and leave it at the released position
+function makeDraggable(card) {
+  let dragging = false;
+  let startX = 0;
+  let startY = 0;
+  let initialLeft = 0;
+  let initialTop = 0;
+  let moved = false;
+
+  card.addEventListener('pointerdown', (event) => {
+    if (event.target.closest('a, button')) return;
+
+    dragging = true;
+    moved = false;
+
+    startX = event.clientX;
+    startY = event.clientY;
+
+    const rect = card.getBoundingClientRect();
+    const parentRect = galleryGrid.getBoundingClientRect();
+
+    initialLeft = rect.left - parentRect.left;
+    initialTop = rect.top - parentRect.top;
+
+    card.style.left = initialLeft + 'px';
+    card.style.top = initialTop + 'px';
+    card.style.transform = 'none';
+    card.style.zIndex = ++topZ;
+    card.style.cursor = 'grabbing';
+
+    card.setPointerCapture(event.pointerId);
+  });
+
+  card.addEventListener('pointermove', (event) => {
+    if (!dragging) return;
+
+    const dx = event.clientX - startX;
+    const dy = event.clientY - startY;
+
+    if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+      moved = true;
+    }
+
+    card.style.left = (initialLeft + dx) + 'px';
+    card.style.top = (initialTop + dy) + 'px';
+  });
+
+  function stopDragging() {
+    if (!dragging) return;
+
+    dragging = false;
+    card.style.cursor = 'grab';
+  }
+
+  card.addEventListener('pointerup', stopDragging);
+  card.addEventListener('pointercancel', stopDragging);
+}
+
+// NO button: move five times, then show a separate full-screen page
 noBtn.addEventListener('click', () => {
   noCount++;
 
   if (noCount <= 5) {
     const parent = noBtn.parentElement;
     const maxX = Math.max(0, parent.clientWidth - noBtn.offsetWidth - 20);
-    const maxY = 100;
 
     noBtn.style.position = 'relative';
     noBtn.style.left = (Math.random() * maxX - maxX / 2) + 'px';
-    noBtn.style.top = (Math.random() * maxY - maxY / 2) + 'px';
+    noBtn.style.top = (Math.random() * 100 - 50) + 'px';
   } else {
-    document.getElementById('question').classList.add('hidden');
-    yesBtn.classList.add('hidden');
-    noBtn.classList.add('hidden');
-
-    message.textContent =
-      "Even if you say no, you will always have a special place in my heart. ❤️ Happy Birthday, Aruna! 💖";
-
-    message.classList.remove('hidden');
+    noPage.style.display = 'flex';
   }
+});
+
+// Return to the question screen
+backBtn.addEventListener('click', () => {
+  noPage.style.display = 'none';
 });
 
 showCard(0);
 </script>
 
-<div id="noPage" class="hidden" style="
-  position: fixed;
-  inset: 0;
-  background: #2b2d42;
-  z-index: 9999;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 25px;
-">
-  <div style="font-family: 'Caveat', cursive; font-size: 35px; color: #ffd6e7;">
-    Even if you say no, you will always have a special place in my heart. ❤️
-    <br><br>
-    Happy Birthday, Aruna! 💖
-  </div>
-</div>
 </body>
 </html>
