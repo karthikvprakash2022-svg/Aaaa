@@ -6,37 +6,46 @@
   <title>HAPPY BIRTHDAY ARUNA</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <main class="Container" id="photoContainer">
+  <main class="Container">
 
     <!-- PAGE 1 -->
-    <div class="Picture" data-page="1">
+    <div class="Picture page" id="page1">
       <img class="Picture-img" src="IMG_2489.jpeg" alt="Happy">
       <div class="Picture-note">Happy 🎉❤️</div>
+      <div class="swipe-hint">SWIPE TO CONTINUE ➜</div>
     </div>
 
     <!-- PAGE 2 -->
-    <div class="Picture" data-page="2">
+    <div class="Picture page" id="page2" hidden>
       <img class="Picture-img" src="IMG_2492.jpeg" alt="Birthday">
       <div class="Picture-note">Birthday 🎂💕</div>
+      <div class="swipe-hint">SWIPE TO CONTINUE ➜</div>
     </div>
 
-    <!-- PAGE 3: YES / NO QUESTION -->
-    <div class="Picture choice-card" data-page="3">
-      <img class="Picture-img"
-           src="F3B3EB89-F079-4EA7-9682-0309338778D0.png"
-           alt="Question">
+    <!-- PAGE 3: YES / NO -->
+    <div class="Picture choice-card page" id="page3" hidden>
 
-      <div class="Picture-note">IF YES SWAP OR BLOCK ❤️</div>
+      <img
+        class="Picture-img"
+        src="F3B3EB89-F079-4EA7-9682-0309338778D0.png"
+        alt="Question"
+      >
+
+      <div class="Picture-note">
+        IF YES SWAP OR BLOCK ❤️
+      </div>
 
       <div class="choice-buttons">
         <button id="yesBtn">YES ❤️</button>
         <button id="noBtn">NO 💔</button>
       </div>
+
     </div>
 
-    <!-- HIDDEN PHOTOS: SHOW AFTER YES -->
+    <!-- HIDDEN PHOTOS: SHOW ONLY AFTER YES -->
     <section id="hiddenPages" hidden>
 
       <div class="Picture">
@@ -80,26 +89,33 @@
       </div>
 
       <div class="Picture">
-        <img class="Picture-img"
-             src="B1DAB360-6248-43C3-8F19-F37FAA73132F.png"
-             alt="">
+        <img
+          class="Picture-img"
+          src="B1DAB360-6248-43C3-8F19-F37FAA73132F.png"
+          alt=""
+        >
         <div class="Picture-note">I KNOW YOU WILL LAUGH 🎂❤️</div>
       </div>
 
       <div class="Picture">
-        <img class="Picture-img"
-             src="19042C7F-AA8E-4839-B449-0B39758CB5CD.jpeg"
-             alt="">
+        <img
+          class="Picture-img"
+          src="19042C7F-AA8E-4839-B449-0B39758CB5CD.jpeg"
+          alt=""
+        >
         <div class="Picture-note">ARUNA 💖🎂</div>
       </div>
 
     </section>
+
   </main>
 
+  <!-- YES MESSAGE -->
   <div id="yesMessage" hidden>
     YAY! ❤️ I KNEW YOU WOULD SAY YES! 🥰
   </div>
 
   <script src="script.js"></script>
+
 </body>
 </html>
