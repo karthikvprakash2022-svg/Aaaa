@@ -1,4 +1,100 @@
 @import url("https://fonts.googleapis.com/css2?family=Caveat");
+.Container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.Picture {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 5px solid #ffffff;
+  border-radius: 3px;
+  background: #f5f5dc;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  transform: translate(50%, 50%);
+  user-select: none;
+  cursor: pointer;
+}
+
+.Picture-video {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 5px solid #fff;
+  border-radius: 3px;
+  background: #3b0d11;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  transform: translate(-50%, -50%);
+  user-select: none;
+  cursor: pointer;
+}
+
+.Picture-img {
+  display: block;
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.Picture {
+  overflow: hidden;
+  width: 400px;
+}
+
+.Picture-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 70px;
+  padding: 12px 24px;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.Picture-note-video {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 70px;
+  padding: 12px 24px;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.Network {
+  display: inline-block;
+  padding: 0 5px;
+}
+
+.Network-video {
+  display: inline-block;
+  padding: 0 5px;
+}
+
+.Network img {
+  width: 1.5rem;
+  aspect-ratio: 1 / 1;
+  vertical-align: middle;
+}
+
+.Network-video img {
+  width: 1.5rem;
+  aspect-ratio: 1 / 1;
+  vertical-align: middle;
+}
+
+/* --------------------- */
+
+/* Other styles          */
+
+/* --------------------- */
 
 * {
   box-sizing: border-box;
@@ -11,192 +107,9 @@ body {
   background-color: #2b2d42;
 }
 
-.Container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 400px;
-  height: 560px;
-  transform: translate(-50%, -50%);
-}
-
-.Picture,
-.Picture-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 400px;
-  border: 5px solid #fff;
-  border-radius: 3px;
-  background: #f5f5dc;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-  overflow: hidden;
-  user-select: none;
-  transition: transform 0.5s ease, opacity 0.5s ease;
-}
-
-.Picture {
-  z-index: 1;
-  cursor: grab;
-}
-
-.Picture-video {
-  background: #3b0d11;
-}
-
-.Picture-img {
-  display: block;
-  width: 100%;
-  height: 400px;
-  object-fit: cover;
-  pointer-events: none;
-}
-
 .Picture-img-video {
-  display: block;
-  width: 100%;
-  height: 450px;
+  width: 500px;
+  height: 550px;
   object-fit: cover;
-}
-
-.Picture-note,
-.Picture-note-video {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 100%;
-  min-height: 70px;
-  padding: 12px 15px;
-  font-size: 1.5rem;
-  text-align: center;
-}
-
-.Network,
-.Network-video {
-  display: inline-block;
-  padding: 0 5px;
-}
-
-.Network img,
-.Network-video img {
-  width: 1.5rem;
-  aspect-ratio: 1 / 1;
-  vertical-align: middle;
-}
-
-/* Stack photos in the center */
-.swipe-card {
-  transform: translate(0, 0);
-  touch-action: pan-y;
-}
-
-.swipe-card:nth-child(2) {
-  z-index: 3;
-}
-
-.swipe-card:nth-child(3) {
-  z-index: 2;
-}
-
-.swipe-card:nth-child(4) {
-  z-index: 1;
-}
-
-/* Hide cards until they are needed */
-.extra-card,
-.hidden-card {
-  display: none !important;
-}
-
-.swipe-card.swiped {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* Question card */
-.question-note {
-  flex-direction: column;
-  gap: 12px;
-  padding: 15px;
-}
-
-.question-text {
-  font-size: 1.7rem;
-  color: #b00045;
-  font-weight: bold;
-}
-
-.button-area {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 25px;
-  width: 100%;
-  min-height: 60px;
-}
-
-.button-area button {
-  border: none;
-  border-radius: 25px;
-  padding: 10px 22px;
-  font-family: "Caveat", serif;
-  font-size: 1.5rem;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-#yesBtn {
-  background: #ff4d88;
-  color: white;
-}
-
-#noBtn {
-  background: #555;
-  color: white;
-}
-
-.love-message {
-  display: none;
-  color: #b00045;
-  font-size: 1.5rem;
-  font-weight: bold;
-  text-align: center;
-  animation: lovePop 0.6s ease;
-}
-
-@keyframes lovePop {
-  0% {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  70% {
-    opacity: 1;
-    transform: scale(1.15);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-/* Mobile */
-@media (max-width: 500px) {
-  .Container {
-    width: 85vw;
-    height: 500px;
-  }
-
-  .Picture,
-  .Picture-video {
-    width: 85vw;
-  }
-
-  .Picture-img {
-    height: 320px;
-  }
-
-  .Picture-img-video {
-    height: 350px;
-  }
+  display: block;
 }
