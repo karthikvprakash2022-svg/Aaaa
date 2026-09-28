@@ -117,12 +117,16 @@ noBtn.addEventListener("click", () => {
       <div style="font-size:5rem">💔</div>
       <h1>It's Okay...</h1>
       <p>
+      IF YOU REALLY DON'T LOVE ME,PLEASE DON'T TELL ANYONE 
+      OTHERWISEEE...
         Maybe we were never meant to be. 😔
         <br><br>
         I will always cherish the beautiful memories
         we shared. Even if you say no, I will wish
         you nothing but happiness.
-        <br><br>
+        <br>
+        BLOCK ME ON INSTAGRAM 
+        <br>
         Take care of yourself. ❤️
       </p>
     </div>
