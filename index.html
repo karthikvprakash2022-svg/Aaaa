@@ -1,121 +1,458 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HAPPY BIRTHDAY ARUNA</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Happy Birthday Aruna ❤️</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: #2b2d42;
+    font-family: "Segoe UI", sans-serif;
+    color: white;
+    user-select: none;
+}
+
+/* Main collage area */
+.Container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Photo cards */
+.Picture {
+    position: absolute;
+    width: 300px;
+    padding: 12px 12px 18px;
+    background: #fff;
+    color: #222;
+    border-radius: 3px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+    cursor: grab;
+    touch-action: none;
+    transform: translate(-50%, -50%) rotate(0deg);
+    transition: box-shadow 0.2s;
+}
+
+.Picture:active {
+    cursor: grabbing;
+}
+
+.Picture img {
+    display: block;
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    pointer-events: none;
+}
+
+.Picture p {
+    margin-top: 12px;
+    font-size: 18px;
+    text-align: center;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Main birthday card */
+.birthday-card {
+    background: #fff0f5;
+}
+
+.birthday-card img {
+    height: 250px;
+}
+
+.birthday-card p {
+    color: #c2185b;
+    font-size: 22px;
+}
+
+/* Swipe card */
+.swipe-card {
+    background: #fff;
+}
+
+.swipe-card p {
+    font-size: 23px;
+    letter-spacing: 2px;
+    color: #d63384;
+}
+
+/* Question card */
+.question-card {
+    width: 320px;
+    text-align: center;
+    background: #fff0f5;
+    padding: 15px;
+}
+
+.question-card img {
+    height: 220px;
+    object-fit: cover;
+}
+
+.question-card h2 {
+    margin: 12px 0;
+    color: #c2185b;
+    font-size: 22px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 12px;
+}
+
+.buttons button {
+    border: none;
+    border-radius: 25px;
+    padding: 11px 30px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#yesBtn {
+    background: #ff4d88;
+    color: white;
+}
+
+#noBtn {
+    background: #555;
+    color: white;
+}
+
+/* Hidden photos */
+.hidden {
+    display: none !important;
+}
+
+/* Final message */
+.message-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(20, 10, 30, 0.96);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    text-align: center;
+}
+
+.message-box {
+    max-width: 600px;
+    padding: 30px;
+    border: 2px solid #ff8bb5;
+    border-radius: 20px;
+    background: #3b1830;
+    box-shadow: 0 0 30px rgba(255, 105, 180, 0.3);
+}
+
+.message-box h1 {
+    color: #ff8bb5;
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+
+.message-box p {
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .Picture {
+        width: 235px;
+        padding: 9px 9px 14px;
+    }
+
+    .Picture img {
+        height: 220px;
+    }
+
+    .birthday-card img {
+        height: 200px;
+    }
+
+    .birthday-card p {
+        font-size: 19px;
+    }
+
+    .Picture p {
+        font-size: 16px;
+    }
+
+    .question-card {
+        width: 260px;
+    }
+
+    .question-card img {
+        height: 175px;
+    }
+
+    .question-card h2 {
+        font-size: 19px;
+    }
+
+    .buttons button {
+        padding: 10px 24px;
+    }
+
+    .message-box h1 {
+        font-size: 25px;
+    }
+
+    .message-box p {
+        font-size: 16px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-  <main class="Container">
+<div class="Container" id="container">
 
-    <!-- PAGE 1 -->
-    <div class="Picture page" id="page1">
-      <img class="Picture-img" src="IMG_2489.jpeg" alt="Happy">
-      <div class="Picture-note">Happy 🎉❤️</div>
-      <div class="swipe-hint">SWIPE TO CONTINUE ➜</div>
+    <!-- 1. Birthday wish -->
+    <div class="Picture birthday-card" data-card="birthday">
+        <img src="IMG_2489.jpeg" alt="Birthday photo">
+        <p>🎂 Happy Birthday, Aruna! ❤️</p>
     </div>
 
-    <!-- PAGE 2 -->
-    <div class="Picture page" id="page2" hidden>
-      <img class="Picture-img" src="IMG_2492.jpeg" alt="Birthday">
-      <div class="Picture-note">Birthday 🎂💕</div>
-      <div class="swipe-hint">SWIPE TO CONTINUE ➜</div>
+    <!-- 2. Swipe card -->
+    <div class="Picture swipe-card" data-card="swipe">
+        <img src="IMG_2492.jpeg" alt="Birthday memories">
+        <p>💌 SWIPE TO CONTINUE 💌</p>
     </div>
 
-    <!-- PAGE 3: YES / NO -->
-    <div class="Picture choice-card page" id="page3" hidden>
+    <!-- 3. YES / NO question -->
+    <div class="Picture question-card" data-card="question">
+        <img src="F3B3EB89-F079-4EA7-9682-0309338778D0.png"
+             alt="Special question">
+        <h2>Will you be mine? ❤️</h2>
 
-      <img
-        class="Picture-img"
-        src="F3B3EB89-F079-4EA7-9682-0309338778D0.png"
-        alt="Question"
-      >
-
-      <div class="Picture-note">
-        IF YES SWAP OR BLOCK ❤️
-      </div>
-
-      <div class="choice-buttons">
-        <button id="yesBtn">YES ❤️</button>
-        <button id="noBtn">NO 💔</button>
-      </div>
-
+        <div class="buttons">
+            <button id="yesBtn">YES ❤️</button>
+            <button id="noBtn">NO 😜</button>
+        </div>
     </div>
 
-    <!-- HIDDEN PHOTOS: SHOW ONLY AFTER YES -->
-    <section id="hiddenPages" hidden>
+    <!-- Other photos: hidden until YES -->
+    <div class="Picture hidden" data-hidden>
+        <img src="IMG_2491.jpeg" alt="Celebrate">
+        <p>🎉 Celebrate</p>
+    </div>
 
-      <div class="Picture">
-        <img class="Picture-img" src="IMG_2491.jpeg" alt="">
-        <div class="Picture-note">Celebrate 🎉💖</div>
-      </div>
+    <div class="Picture hidden" data-hidden>
+        <img src="IMG_2494.jpeg" alt="Gift">
+        <p>🎁 Gift</p>
+    </div>
 
-      <div class="Picture">
-        <img class="Picture-img" src="IMG_2494.jpeg" alt="">
-        <div class="Picture-note">Gift 🎁❤️</div>
-      </div>
+    <div class="Picture hidden" data-hidden>
+        <img src="IMG_2493.jpeg" alt="Love">
+        <p>❤️ Love</p>
+    </div>
 
-      <div class="Picture">
-        <img class="Picture-img" src="IMG_2493.jpeg" alt="">
-        <div class="Picture-note">Love 💕🎈</div>
-      </div>
+    <div class="Picture hidden" data-hidden>
+        <img src="IMG_2495.jpeg" alt="Joy">
+        <p>✨ Joy</p>
+    </div>
 
-      <div class="Picture">
-        <img class="Picture-img" src="IMG_2495.jpeg" alt="">
-        <div class="Picture-note">Joy ❤️🎂</div>
-      </div>
+    <div class="Picture hidden" data-hidden>
+        <img src="IMG_2490.jpeg" alt="Hugs">
+        <p>🤗 Hugs</p>
+    </div>
 
-      <div class="Picture">
-        <img class="Picture-img" src="IMG_2495.jpeg" alt="">
-        <div class="Picture-note">Fun 🎈💖</div>
-      </div>
+    <div class="Picture hidden" data-hidden>
+        <img src="IMG_2496.jpeg" alt="Smile">
+        <p>😊 Smile</p>
+    </div>
 
-      <div class="Picture">
-        <img class="Picture-img" src="IMG_2490.jpeg" alt="">
-        <div class="Picture-note">Hugs 💖🎂</div>
-      </div>
+    <div class="Picture hidden" data-hidden>
+        <img src="alapuza.jpeg" alt="Yay">
+        <p>🌸 Yay</p>
+    </div>
 
-      <div class="Picture">
-        <img class="Picture-img" src="IMG_2496.jpeg" alt="">
-        <div class="Picture-note">Smile 🎉💕</div>
-      </div>
+    <div class="Picture hidden" data-hidden>
+        <img src="B1DAB360-6248-43C3-8F19-F37FAA73132F.png"
+             alt="Special memory">
+        <p>💖 A Special Memory</p>
+    </div>
 
-      <div class="Picture">
-        <img class="Picture-img" src="alapuza.jpeg" alt="">
-        <div class="Picture-note">Yay 🎉💕</div>
-      </div>
+    <div class="Picture hidden" data-hidden>
+        <img src="19042C7F-AA8E-4839-B449-0B39758CB5CD.jpeg"
+             alt="One more memory">
+        <p>🥰 One More Memory</p>
+    </div>
 
-      <div class="Picture">
-        <img
-          class="Picture-img"
-          src="B1DAB360-6248-43C3-8F19-F37FAA73132F.png"
-          alt=""
-        >
-        <div class="Picture-note">I KNOW YOU WILL LAUGH 🎂❤️</div>
-      </div>
+</div>
 
-      <div class="Picture">
-        <img
-          class="Picture-img"
-          src="19042C7F-AA8E-4839-B449-0B39758CB5CD.jpeg"
-          alt=""
-        >
-        <div class="Picture-note">ARUNA 💖🎂</div>
-      </div>
+<!-- NO button final message -->
+<div class="message-screen" id="messageScreen">
+    <div class="message-box">
+        <h1>❤️ One Last Thing ❤️</h1>
+        <p>
+            No matter what your answer is, you will always be
+            someone special to me. 🥹❤️
+            <br><br>
+            I just wanted to make your birthday a little more
+            memorable. You deserve all the happiness in the world.
+            <br><br>
+            Happy Birthday, Aruna! 🎂💖
+        </p>
+    </div>
+</div>
 
-    </section>
+<script>
+const container = document.getElementById("container");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const messageScreen = document.getElementById("messageScreen");
 
-  </main>
+let noCount = 0;
+let topZ = 10;
 
-  <!-- YES MESSAGE -->
-  <div id="yesMessage" hidden>
-    YAY! ❤️ I KNEW YOU WOULD SAY YES! 🥰
-  </div>
+/* Place cards around the screen */
+function arrangeCards() {
+    const cards = [...document.querySelectorAll(".Picture:not(.hidden)")];
 
-  <script src="script.js"></script>
+    const positions = [
+        { x: 25, y: 35 },
+        { x: 72, y: 65 },
+        { x: 52, y: 40 }
+    ];
+
+    cards.forEach((card, index) => {
+        if (card.dataset.placed === "true") return;
+
+        let x, y;
+
+        if (index < positions.length) {
+            x = positions[index].x;
+            y = positions[index].y;
+        } else {
+            x = 15 + Math.random() * 70;
+            y = 20 + Math.random() * 60;
+        }
+
+        card.style.left = x + "%";
+        card.style.top = y + "%";
+        card.style.transform =
+            `translate(-50%, -50%) rotate(${Math.random() * 12 - 6}deg)`;
+        card.style.zIndex = ++topZ;
+        card.dataset.placed = "true";
+    });
+}
+
+/* Make cards draggable */
+function makeDraggable(card) {
+    let startX = 0;
+    let startY = 0;
+    let initialLeft = 0;
+    let initialTop = 0;
+    let dragging = false;
+
+    card.addEventListener("pointerdown", function (e) {
+        if (e.target.closest("button")) return;
+
+        dragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+
+        const rect = card.getBoundingClientRect();
+        initialLeft = rect.left + rect.width / 2;
+        initialTop = rect.top + rect.height / 2;
+
+        card.style.zIndex = ++topZ;
+        card.setPointerCapture(e.pointerId);
+    });
+
+    card.addEventListener("pointermove", function (e) {
+        if (!dragging) return;
+
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        card.style.left = (initialLeft + dx) + "px";
+        card.style.top = (initialTop + dy) + "px";
+        card.style.transform = "translate(-50%, -50%) rotate(0deg)";
+    });
+
+    function stopDragging() {
+        dragging = false;
+    }
+
+    card.addEventListener("pointerup", stopDragging);
+    card.addEventListener("pointercancel", stopDragging);
+}
+
+/* Setup all cards */
+document.querySelectorAll(".Picture").forEach(makeDraggable);
+arrangeCards();
+
+/* YES: Reveal all hidden photos */
+yesBtn.addEventListener("click", function (e) {
+    e.stopPropagation();
+
+    document.querySelectorAll("[data-hidden]").forEach(card => {
+        card.classList.remove("hidden");
+        card.dataset.placed = "false";
+    });
+
+    arrangeCards();
+    yesBtn.textContent = "YES! ❤️";
+    yesBtn.disabled = true;
+});
+
+/* NO: Move the button five times, then show message */
+noBtn.addEventListener("click", function (e) {
+    e.stopPropagation();
+    noCount++;
+
+    if (noCount <= 5) {
+        const parent = noBtn.parentElement;
+        const maxX = Math.max(0, parent.clientWidth - noBtn.offsetWidth);
+        const maxY = 100;
+
+        noBtn.style.position = "relative";
+        noBtn.style.left = (Math.random() * Math.min(maxX, 100) - 30) + "px";
+        noBtn.style.top = (Math.random() * maxY - 50) + "px";
+    } else {
+        messageScreen.style.display = "flex";
+    }
+});
+
+/* Prevent image dragging and right-click menu */
+document.querySelectorAll("img").forEach(img => {
+    img.addEventListener("dragstart", e => e.preventDefault());
+});
+
+document.addEventListener("contextmenu", e => e.preventDefault());
+
+/* Reposition on resize */
+window.addEventListener("resize", () => {
+    document.querySelectorAll(".Picture:not(.hidden)").forEach(card => {
+        if (card.dataset.placed !== "true") {
+            card.dataset.placed = "false";
+        }
+    });
+});
+</script>
 
 </body>
 </html>
