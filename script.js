@@ -1,3 +1,4 @@
+
 const page1 = document.getElementById("page1");
 const page2 = document.getElementById("page2");
 const page3 = document.getElementById("page3");
@@ -24,11 +25,16 @@ page1.style.zIndex = zIndex++;
 page2.style.zIndex = zIndex++;
 page3.style.zIndex = zIndex++;
 
-// SWIPE AND CLICK TO MOVE BETWEEN PAGES
+hiddenPages.hidden = true;
+yesMessage.hidden = true;
 
-let currentPage = 1;
+// ---------------------------------
+// PAGE NAVIGATION
+// ---------------------------------
 
 function showPage(pageNumber) {
+  if (pageNumber < 1 || pageNumber > 3) return;
+
   page1.hidden = pageNumber !== 1;
   page2.hidden = pageNumber !== 2;
   page3.hidden = pageNumber !== 3;
@@ -42,33 +48,51 @@ function goNext() {
   }
 }
 
+// ---------------------------------
+// SWIPE AND CLICK TO CHANGE PAGES
+// ---------------------------------
+
 function enableSwipe(page) {
   let startX = 0;
   let startY = 0;
+  let moved = false;
 
-  page.addEventListener("pointerdown", (e) => {
-    startX = e.clientX;
-    startY = e.clientY;
+  page.addEventListener("pointerdown", (event) => {
+    startX = event.clientX;
+    startY = event.clientY;
+    moved = false;
   });
 
-  page.addEventListener("pointerup", (e) => {
-    const dx = e.clientX - startX;
-    const dy = e.clientY - startY;
+  page.addEventListener("pointerup", (event) => {
+    const dx = event.clientX - startX;
+    const dy = event.clientY - startY;
 
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+    if (
+      Math.abs(dx) > 50 &&
+      Math.abs(dx) > Math.abs(dy)
+    ) {
+      moved = true;
       goNext();
     }
   });
 
-  // Click the card to go to the next page too
-  page.addEventListener("click", () => {
+  page.addEventListener("click", (event) => {
+    if (moved) {
+      moved = false;
+      return;
+    }
+
+    if (event.target.closest("button")) return;
+
     goNext();
   });
 }
 
 showPage(1);
+
 enableSwipe(page1);
 enableSwipe(page2);
+
 // ---------------------------------
 // YES BUTTON: REVEAL ALL PHOTOS
 // ---------------------------------
@@ -117,6 +141,7 @@ function enableDrag(card) {
     if (event.target.closest("button")) return;
 
     dragging = true;
+
     card.setPointerCapture(event.pointerId);
     card.style.zIndex = zIndex++;
 
