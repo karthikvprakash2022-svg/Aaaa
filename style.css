@@ -335,3 +335,7 @@ body {
   cursor: pointer;
   text-decoration: underline;
 }
+.main-frame {
+  width: 280px;
+  height: 380px;
+}
