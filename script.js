@@ -1,50 +1,92 @@
+
 const pictures = document.querySelectorAll(".Picture");
 
-let previousTouch = undefined;
-let zIndexCounter = 1; // controls which photo stays on top
+let zIndexCounter = 1;
+let activePicture = null;
+let previousTouch = null;
+
+// Arrange all pictures in stack order
+pictures.forEach((picture, index) => {
+  picture.style.zIndex = index + 1;
+  picture.style.pointerEvents = "none";
+});
+
+// Only the topmost picture can be dragged
+function getTopPicture() {
+  const visiblePictures = [...pictures].filter(
+    (picture) => picture.style.display !== "none"
+  );
+
+  return visiblePictures.reduce((top, picture) => {
+    return Number(picture.style.zIndex) > Number(top.style.zIndex)
+      ? picture
+      : top;
+  }, visiblePictures[0]);
+}
 
 function updateElementPosition(element, event) {
   let movementX, movementY;
 
   if (event.type === "touchmove") {
     const touch = event.touches[0];
-    movementX = previousTouch ? touch.clientX - previousTouch.clientX : 0;
-    movementY = previousTouch ? touch.clientY - previousTouch.clientY : 0;
+
+    movementX = previousTouch
+      ? touch.clientX - previousTouch.clientX
+      : 0;
+
+    movementY = previousTouch
+      ? touch.clientY - previousTouch.clientY
+      : 0;
+
     previousTouch = touch;
   } else {
     movementX = event.movementX;
     movementY = event.movementY;
   }
 
-  const elementY = parseInt(element.style.top || 0) + movementY;
-  const elementX = parseInt(element.style.left || 0) + movementX;
+  const elementY =
+    parseFloat(element.style.top || 0) + movementY;
+
+  const elementX =
+    parseFloat(element.style.left || 0) + movementX;
 
   element.style.top = elementY + "px";
   element.style.left = elementX + "px";
 }
 
 function startDrag(element, event) {
-  element.style.zIndex = zIndexCounter++; // bring dragged photo to front
+  const topPicture = getTopPicture();
 
-  const updateFunction = (event) => updateElementPosition(element, event);
-  const stopFunction = () =>
-    stopDrag({ update: updateFunction, stop: stopFunction });
+  if (element !== topPicture) return;
+
+  activePicture = element;
+  element.style.zIndex = zIndexCounter++;
+
+  const updateFunction = (event) => {
+    if (activePicture) {
+      updateElementPosition(activePicture, event);
+    }
+  };
+
+  const stopFunction = () => {
+    document.removeEventListener("mousemove", updateFunction);
+    document.removeEventListener("touchmove", updateFunction);
+    document.removeEventListener("mouseup", stopFunction);
+    document.removeEventListener("touchend", stopFunction);
+
+    activePicture = null;
+    previousTouch = null;
+  };
 
   document.addEventListener("mousemove", updateFunction);
-  document.addEventListener("touchmove", updateFunction);
+  document.addEventListener("touchmove", updateFunction, {
+    passive: true,
+  });
   document.addEventListener("mouseup", stopFunction);
   document.addEventListener("touchend", stopFunction);
 }
 
-function stopDrag(functions) {
-  previousTouch = undefined;
-
-  document.removeEventListener("mousemove", functions.update);
-  document.removeEventListener("touchmove", functions.update);
-  document.removeEventListener("mouseup", functions.stop);
-  document.removeEventListener("touchend", functions.stop);
-}
-
+// Initialize pictures
 pictures.forEach((picture) => {
   const range = 100;
 
@@ -52,22 +94,21 @@ pictures.forEach((picture) => {
   const randomY = Math.random() * (range * 2) - range;
   const randomRotate = Math.random() * (range / 2) - range / 4;
 
-  const startFunction = (event) => startDrag(picture, event);
-
   picture.style.top = `${randomY}px`;
   picture.style.left = `${randomX}px`;
-  picture.style.transform = `translate(-50%, -50%) rotate(${randomRotate}deg)`;
+  picture.style.transform =
+    `translate(-50%, -50%) rotate(${randomRotate}deg)`;
 
-  picture.addEventListener("mousedown", startFunction);
-  picture.addEventListener("touchstart", startFunction);
-});
-document.getElementById("yesBtn").addEventListener("click", () => {
-  alert("Aww ❤️ I knew it! 💕");
+  picture.addEventListener("mousedown", (event) => {
+    startDrag(picture, event);
+  });
+
+  picture.addEventListener("touchstart", (event) => {
+    startDrag(picture, event);
+  });
 });
 
-document.getElementById("noBtn").addEventListener("click", () => {
-  alert("Are you sure? 🥺💔");
-});
+// YES and NO buttons
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 
