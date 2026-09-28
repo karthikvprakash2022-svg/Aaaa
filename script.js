@@ -2,6 +2,7 @@
 const pictures = document.querySelectorAll(".Picture");
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
+const hiddenPages = document.getElementById("hiddenPages");
 
 let zIndexCounter = 1;
 let noClickCount = 0;
@@ -51,11 +52,11 @@ pictures.forEach((picture) => {
   picture.addEventListener("pointermove", (event) => {
     if (!dragging || isBlank) return;
 
-    picture.style.left =
-      `${initialLeft + event.clientX - startX}px`;
+    const movementX = event.clientX - startX;
+    const movementY = event.clientY - startY;
 
-    picture.style.top =
-      `${initialTop + event.clientY - startY}px`;
+    picture.style.left = `${initialLeft + movementX}px`;
+    picture.style.top = `${initialTop + movementY}px`;
   });
 
   const stopDragging = () => {
@@ -69,7 +70,7 @@ pictures.forEach((picture) => {
 
 // ==============================
 // YES BUTTON
-// SHOW POPUP FOR 3 SECONDS
+// REVEAL HIDDEN PAGES + POPUP
 // ==============================
 
 if (yesBtn && noBtn) {
@@ -79,10 +80,18 @@ if (yesBtn && noBtn) {
 
     if (isBlank) return;
 
+    // Hide NO button
     noBtn.style.display = "none";
 
+    // Reveal remaining pages
+    if (hiddenPages) {
+      hiddenPages.style.display = "block";
+    }
+
+    // Remove previous popup
     document.getElementById("yesMessage")?.remove();
 
+    // Create popup
     const message = document.createElement("div");
     message.id = "yesMessage";
     message.textContent = "YAY! ❤️ I KNEW YOU WOULD SAY YES! 🥰";
@@ -110,6 +119,7 @@ if (yesBtn && noBtn) {
 
     document.body.appendChild(message);
 
+    // Remove popup after 3 seconds
     setTimeout(() => message.remove(), 3000);
   });
 }
@@ -126,10 +136,11 @@ if (noBtn) {
 
     if (isBlank) return;
 
+    // Blank page on 6th click
     if (noClickCount >= 5) {
       isBlank = true;
       document.body.innerHTML = "";
-      document.body.style.background = "#fff";
+      document.body.style.background = "#ffffff";
       return;
     }
 
@@ -140,6 +151,7 @@ if (noBtn) {
     noBtn.style.transform = "translateX(-50%)";
     noBtn.style.zIndex = "9999999";
 
+    // Alternate between top and bottom
     if (noClickCount % 2 === 1) {
       noBtn.style.top = "10px";
       noBtn.style.bottom = "auto";
