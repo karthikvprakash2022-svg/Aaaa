@@ -1,16 +1,4 @@
-
 @import url("https://fonts.googleapis.com/css2?family=Caveat");
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: "Caveat", serif;
-  overflow: hidden;
-  background-color: #2b2d42;
-}
 
 .Container {
   position: absolute;
@@ -27,15 +15,9 @@ body {
   border-radius: 3px;
   background: #f5f5dc;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-  transform: translate(-50%, -50%);
+  transform: translate(50%, 50%);
   user-select: none;
-  cursor: grab;
-  overflow: hidden;
-  width: 400px;
-}
-
-.Picture:active {
-  cursor: grabbing;
+  cursor: pointer;
 }
 
 .Picture-video {
@@ -49,7 +31,7 @@ body {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   transform: translate(-50%, -50%);
   user-select: none;
-  cursor: grab;
+  cursor: pointer;
 }
 
 .Picture-img {
@@ -60,16 +42,68 @@ body {
   pointer-events: none;
 }
 
-.Picture-note,
+.Picture {
+  overflow: hidden;
+  width: 400px;
+}
+
+.Picture-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 70px;
+  padding: 12px 24px;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
 .Picture-note-video {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  min-height: 70px;
-  padding: 12px 15px;
+  width: 300px;
+  height: 70px;
+  padding: 12px 24px;
   font-size: 1.5rem;
   text-align: center;
+}
+
+.Network {
+  display: inline-block;
+  padding: 0 5px;
+}
+
+.Network-video {
+  display: inline-block;
+  padding: 0 5px;
+}
+
+.Network img {
+  width: 1.5rem;
+  aspect-ratio: 1 / 1;
+  vertical-align: middle;
+}
+
+.Network-video img {
+  width: 1.5rem;
+  aspect-ratio: 1 / 1;
+  vertical-align: middle;
+}
+
+/* --------------------- */
+/* Other styles          */
+/* --------------------- */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Caveat", serif;
+  overflow: hidden;
+  background-color: #2b2d42;
 }
 
 .Picture-img-video {
@@ -77,164 +111,4 @@ body {
   height: 550px;
   object-fit: cover;
   display: block;
-}
-
-.Network,
-.Network-video {
-  display: inline-block;
-  padding: 0 5px;
-}
-
-.Network img,
-.Network-video img {
-  width: 1.5rem;
-  aspect-ratio: 1 / 1;
-  vertical-align: middle;
-}
-
-/* QUESTION CARD */
-
-.question-card {
-  background: #fff0f5;
-}
-
-.question-card .Picture-note {
-  min-height: 130px;
-  padding: 15px;
-}
-
-.question-content {
-  width: 100%;
-  text-align: center;
-}
-
-.question-content h2 {
-  color: #c2185b;
-  font-size: 28px;
-  margin: 0 0 15px;
-}
-
-.question-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-
-.question-buttons button {
-  border: none;
-  border-radius: 30px;
-  padding: 10px 25px;
-  font-family: Arial, sans-serif;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.question-buttons button:hover {
-  transform: scale(1.08);
-}
-
-#yesBtn {
-  background: #ff4d88;
-  color: white;
-}
-
-#noBtn {
-  background: #555;
-  color: white;
-}
-
-/* YES MESSAGE */
-
-#yesMessage {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 999999;
-  background: #ff4d88;
-  color: white;
-  font-family: Arial, sans-serif;
-  font-size: 20px;
-  font-weight: bold;
-  padding: 15px 25px;
-  border-radius: 30px;
-  box-shadow: 0 5px 20px #0004;
-  white-space: nowrap;
-}
-
-/* NO ENDING */
-
-.no-ending {
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-  display: grid;
-  place-items: center;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  z-index: 999999;
-}
-
-.no-ending section {
-  background: white;
-  padding: 30px 22px;
-  border-radius: 24px;
-  max-width: 400px;
-  box-shadow: 0 10px 30px #0002;
-}
-
-.no-ending h1,
-.no-ending h2 {
-  color: #ff1744;
-}
-
-.no-ending p {
-  font-size: 19px;
-  line-height: 1.6;
-  color: #444;
-}
-
-/* MOBILE */
-
-@media (max-width: 600px) {
-  .Picture {
-    width: 280px;
-  }
-
-  .Picture-img {
-    width: 270px;
-    height: 300px;
-  }
-
-  .Picture-video {
-    max-width: 90vw;
-  }
-
-  .Picture-img-video {
-    width: 85vw;
-    height: 65vh;
-    object-fit: cover;
-  }
-
-  .Picture-note,
-  .Picture-note-video {
-    font-size: 1.2rem;
-    min-height: 60px;
-  }
-
-  .question-content h2 {
-    font-size: 23px;
-  }
-
-  .question-buttons button {
-    padding: 10px 20px;
-    font-size: 15px;
-  }
-}
-
-[hidden] {
-  display: none !important;
 }
