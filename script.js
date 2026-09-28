@@ -93,7 +93,6 @@ pictures.forEach((picture) => {
   });
 
 
-});
 
 /* Disable right-click */
 document.addEventListener("contextmenu", (event) => {
