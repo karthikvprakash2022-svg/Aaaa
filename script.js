@@ -1,119 +1,142 @@
+const pictures = document.querySelectorAll(".Picture");
 
-const cards = [...document.querySelectorAll('#stage .Picture')];
-const stage = document.getElementById('stage');
-const gallery = document.getElementById('gallery');
-const yesBtn = document.getElementById('yesBtn');
-const noBtn = document.getElementById('noBtn');
-const message = document.getElementById('message');
+let previousTouch = undefined;
+let zIndexCounter = 1;
 
-const galleryGrid = gallery.querySelector('.gallery-grid');
-const galleryCards = [...galleryGrid.querySelectorAll('.Picture')];
+// Original photo dragging
+function updateElementPosition(element, event) {
+  let movementX, movementY;
 
-let current = 0;
-let galleryCurrent = 0;
-let startX = 0;
-let startY = 0;
-let noCount = 0;
+  if (event.type === "touchmove") {
+    const touch = event.touches[0];
 
-function showCard(index) {
-  cards.forEach((card, i) => {
-    card.classList.toggle('hidden', i !== index);
-  });
-}
+    movementX = previousTouch
+      ? touch.clientX - previousTouch.clientX
+      : 0;
 
-function nextCard() {
-  if (current < cards.length - 1) {
-    current++;
-    showCard(current);
-  }
-}
+    movementY = previousTouch
+      ? touch.clientY - previousTouch.clientY
+      : 0;
 
-function setupSwipe(element, callback) {
-  let x = 0;
-  let y = 0;
-
-  element.addEventListener('pointerdown', (event) => {
-    if (event.target.closest('button')) return;
-    x = event.clientX;
-    y = event.clientY;
-  });
-
-  element.addEventListener('pointerup', (event) => {
-    if (event.target.closest('button')) return;
-
-    const dx = event.clientX - x;
-    const dy = event.clientY - y;
-
-    if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy)) {
-      callback();
-    }
-  });
-}
-
-setupSwipe(stage, nextCard);
-
-function showGalleryCard(index) {
-  galleryCards.forEach((card, i) => {
-    card.classList.toggle('hidden', i !== index);
-  });
-}
-
-function nextGalleryCard() {
-  if (galleryCurrent < galleryCards.length - 1) {
-    galleryCurrent++;
-    showGalleryCard(galleryCurrent);
-  }
-}
-
-yesBtn.addEventListener('click', () => {
-  stage.style.display = 'none';
-  gallery.style.display = 'block';
-
-  galleryGrid.style.display = 'flex';
-  galleryGrid.style.position = 'relative';
-  galleryGrid.style.justifyContent = 'center';
-  galleryGrid.style.alignItems = 'center';
-  galleryGrid.style.height = '75vh';
-  galleryGrid.style.minHeight = '450px';
-  galleryGrid.style.maxWidth = '100%';
-  galleryGrid.style.touchAction = 'pan-y';
-
-  galleryCards.forEach((card) => {
-    card.style.position = 'absolute';
-    card.style.left = '50%';
-    card.style.top = '50%';
-    card.style.width = 'min(82vw, 350px)';
-    card.style.transform = 'translate(-50%, -50%)';
-    card.style.margin = '0';
-  });
-
-  galleryCurrent = 0;
-  showGalleryCard(galleryCurrent);
-
-  setupSwipe(galleryGrid, nextGalleryCard);
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-noBtn.addEventListener('click', () => {
-  noCount++;
-
-  if (noCount <= 5) {
-    const parent = noBtn.parentElement;
-    const maxX = Math.max(0, parent.clientWidth - noBtn.offsetWidth - 20);
-
-    noBtn.style.left = (Math.random() * maxX - maxX / 2) + 'px';
-    noBtn.style.top = (Math.random() * 100 - 50) + 'px';
+    previousTouch = touch;
   } else {
-    document.getElementById('question').classList.add('hidden');
-    yesBtn.classList.add('hidden');
-    noBtn.classList.add('hidden');
-
-    message.textContent =
-      "Even if you say no, you will always have a special place in my heart. ❤️ Happy Birthday, Aruna! 💖";
-
-    message.classList.remove('hidden');
+    movementX = event.movementX;
+    movementY = event.movementY;
   }
+
+  const elementY =
+    parseInt(element.style.top || 0) + movementY;
+
+  const elementX =
+    parseInt(element.style.left || 0) + movementX;
+
+  element.style.top = elementY + "px";
+  element.style.left = elementX + "px";
+}
+
+function startDrag(element, event) {
+  // Don't drag when clicking a button
+  if (event.target.closest("button")) return;
+
+  element.style.zIndex = zIndexCounter++;
+
+  const updateFunction = (event) =>
+    updateElementPosition(element, event);
+
+  const stopFunction = () =>
+    stopDrag({
+      update: updateFunction,
+      stop: stopFunction
+    });
+
+  document.addEventListener("mousemove", updateFunction);
+  document.addEventListener("touchmove", updateFunction);
+  document.addEventListener("mouseup", stopFunction);
+  document.addEventListener("touchend", stopFunction);
+}
+
+function stopDrag(functions) {
+  previousTouch = undefined;
+
+  document.removeEventListener("mousemove", functions.update);
+  document.removeEventListener("touchmove", functions.update);
+  document.removeEventListener("mouseup", functions.stop);
+  document.removeEventListener("touchend", functions.stop);
+}
+
+// Keep the original random card placement
+pictures.forEach((picture) => {
+  const range = 100;
+
+  const randomX = Math.random() * (range * 2) - range;
+  const randomY = Math.random() * (range * 2) - range;
+  const randomRotate = Math.random() * (range / 2) - range / 4;
+
+  picture.style.top = `${randomY}px`;
+  picture.style.left = `${randomX}px`;
+  picture.style.transform =
+    `translate(-50%, -50%) rotate(${randomRotate}deg)`;
+
+  picture.addEventListener("mousedown", (event) =>
+    startDrag(picture, event)
+  );
+
+  picture.addEventListener("touchstart", (event) =>
+    startDrag(picture, event)
+  );
 });
 
-showCard(0);
+// YES / NO buttons
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const buttonArea = document.getElementById("buttonArea");
+const loveMessage = document.getElementById("loveMessage");
+
+let noClickCount = 0;
+
+// YES: reveal all remaining photos
+yesBtn.addEventListener("click", () => {
+  document.querySelectorAll(".hidden-photo").forEach((photo) => {
+    photo.classList.remove("hidden-photo");
+  });
+
+  document.getElementById("questionCard").classList.add("accepted");
+
+  buttonArea.style.display = "none";
+  document.querySelector(".question-text").style.display = "none";
+
+  loveMessage.textContent =
+    "Yayyy! I love you so much, Aruna! ❤️🥹💖";
+
+  loveMessage.style.display = "block";
+});
+
+// NO: move 5 times, show note on the 6th click
+noBtn.addEventListener("click", () => {
+  noClickCount++;
+
+  if (noClickCount <= 5) {
+    const maxX = Math.max(
+      0,
+      buttonArea.clientWidth - noBtn.offsetWidth
+    );
+
+    const maxY = 60;
+
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+
+    noBtn.style.position = "absolute";
+    noBtn.style.left = `${randomX}px`;
+    noBtn.style.top = `${randomY}px`;
+  } else {
+    buttonArea.style.display = "none";
+
+    document.querySelector(".question-text").style.display = "none";
+
+    loveMessage.textContent =
+      "Even if you say no, you will always be special to me. ❤️🥹";
+
+    loveMessage.style.display = "block";
+  }
+});
