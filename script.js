@@ -13,9 +13,9 @@ let zIndexCounter = 10;
 
 // INTRO: 3 PHOTOS TO DRAG MANUALLY
 const slides = [
-  { src: "IMG_2489.jpeg", text: "Happy 🎉❤️" },
-  { src: "IMG_2496.jpeg", text: "Birthday 🎂💕" },
-  { src: "IMG_2494.jpeg", text: "Celebrate 🎉💖" }
+  { src: "19042C7F-AA8E-4839-B449-0B39758CB5CD.jpeg", text: "Happy 🎉❤️" },
+  { src: "IMG_2496.jpeg", text: "Birthday Arunaaa... 🎂💕" },
+  { src: "B1DAB360-6248-43C3-8F19-F37FAA73132F.png", text: "Celebrate 🎉💖" }
 ];
 
 let currentSlide = 0;
