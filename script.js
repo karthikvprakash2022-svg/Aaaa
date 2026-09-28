@@ -122,3 +122,33 @@ document.addEventListener("dragstart", (event) => {
 document.addEventListener("selectstart", (event) => {
   event.preventDefault();
 });
+yesBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+
+  // Keep all photos movable
+  lockedPictures.clear();
+
+  // Hide NO button
+  noBtn.style.display = "none";
+
+  // Show a cute message
+  const message = document.createElement("h2");
+  message.textContent = "YAY! ❤️ I KNEW YOU WOULD SAY YES! 🥰";
+
+  message.style.cssText = `
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ff1744;
+    color: white;
+    padding: 25px;
+    border-radius: 20px;
+    z-index: 999999;
+    text-align: center;
+    width: 85%;
+    font-family: Arial, sans-serif;
+  `;
+
+  document.body.appendChild(message);
+});
