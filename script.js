@@ -7,7 +7,10 @@ let zIndexCounter = 1;
 let noClickCount = 0;
 let isBlank = false;
 
-// Drag photos using mouse or touch
+// ==============================
+// DRAG AND MOVE PHOTOS
+// ==============================
+
 pictures.forEach((picture) => {
   const range = 100;
 
@@ -15,10 +18,13 @@ pictures.forEach((picture) => {
   const randomY = Math.random() * range * 2 - range;
   const randomRotate = Math.random() * 50 - 25;
 
-  picture.style.top = `${randomY}px`;
   picture.style.left = `${randomX}px`;
+  picture.style.top = `${randomY}px`;
   picture.style.transform =
     `translate(-50%, -50%) rotate(${randomRotate}deg)`;
+
+  picture.style.touchAction = "none";
+  picture.style.userSelect = "none";
 
   let dragging = false;
   let startX = 0;
@@ -27,8 +33,7 @@ pictures.forEach((picture) => {
   let initialTop = 0;
 
   picture.addEventListener("pointerdown", (event) => {
-    if (event.target.closest(".choice-buttons")) return;
-    if (event.target.closest("a")) return;
+    if (event.target.closest(".choice-buttons, a")) return;
     if (isBlank) return;
 
     dragging = true;
@@ -46,77 +51,109 @@ pictures.forEach((picture) => {
   picture.addEventListener("pointermove", (event) => {
     if (!dragging || isBlank) return;
 
-    const movementX = event.clientX - startX;
-    const movementY = event.clientY - startY;
+    picture.style.left =
+      `${initialLeft + event.clientX - startX}px`;
 
-    picture.style.left = initialLeft + movementX + "px";
-    picture.style.top = initialTop + movementY + "px";
+    picture.style.top =
+      `${initialTop + event.clientY - startY}px`;
   });
 
-  picture.addEventListener("pointerup", () => {
+  const stopDragging = () => {
     dragging = false;
-  });
+  };
 
-  picture.addEventListener("pointercancel", () => {
-    dragging = false;
-  });
+  picture.addEventListener("pointerup", stopDragging);
+  picture.addEventListener("pointercancel", stopDragging);
+  picture.addEventListener("lostpointercapture", stopDragging);
 });
 
-// YES button
-yesBtn.addEventListener("click", (event) => {
-  event.stopPropagation();
+// ==============================
+// YES BUTTON
+// SHOW POPUP FOR 3 SECONDS
+// ==============================
 
-  if (isBlank) return;
+if (yesBtn && noBtn) {
+  yesBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
 
-  noBtn.style.display = "none";
+    if (isBlank) return;
 
-  let message = document.getElementById("yesMessage");
+    noBtn.style.display = "none";
 
-  if (!message) {
-    message = document.createElement("div");
+    document.getElementById("yesMessage")?.remove();
+
+    const message = document.createElement("div");
     message.id = "yesMessage";
-    message.textContent =
-      "YAY! ❤️ I KNEW YOU WOULD SAY YES! 🥰";
+    message.textContent = "YAY! ❤️ I KNEW YOU WOULD SAY YES! 🥰";
+
+    message.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #ff1744;
+      color: white;
+      padding: 25px 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      z-index: 9999999;
+      text-align: center;
+      width: 85%;
+      max-width: 350px;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      font-size: 22px;
+      font-weight: bold;
+      animation: popupEffect 0.3s ease;
+    `;
 
     document.body.appendChild(message);
-  }
-});
 
-// NO button: move top and bottom 5 times,
-// then make the entire page blank on the next click.
-noBtn.addEventListener("click", (event) => {
-  event.preventDefault();
-  event.stopPropagation();
+    setTimeout(() => message.remove(), 3000);
+  });
+}
 
-  if (isBlank) return;
+// ==============================
+// NO BUTTON
+// MOVE 5 TIMES, THEN BLANK PAGE
+// ==============================
 
-  // After 5 movements, the next click blanks the page.
-  if (noClickCount >= 5) {
-    isBlank = true;
-    document.body.innerHTML = "";
-    document.body.className = "blank-screen";
-    document.body.style.background = "#ffffff";
-    return;
-  }
+if (noBtn) {
+  noBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
 
-  noClickCount++;
+    if (isBlank) return;
 
-  noBtn.style.position = "absolute";
-  noBtn.style.left = "50%";
-  noBtn.style.transform = "translateX(-50%)";
-  noBtn.style.zIndex = "9999999";
+    if (noClickCount >= 5) {
+      isBlank = true;
+      document.body.innerHTML = "";
+      document.body.style.background = "#fff";
+      return;
+    }
 
-  // Odd numbers: top, even numbers: bottom
-  if (noClickCount % 2 === 1) {
-    noBtn.style.top = "10px";
-    noBtn.style.bottom = "auto";
-  } else {
-    noBtn.style.top = "auto";
-    noBtn.style.bottom = "10px";
-  }
-});
+    noClickCount++;
 
-// Prevent right-click and image dragging
+    noBtn.style.position = "fixed";
+    noBtn.style.left = "50%";
+    noBtn.style.transform = "translateX(-50%)";
+    noBtn.style.zIndex = "9999999";
+
+    if (noClickCount % 2 === 1) {
+      noBtn.style.top = "10px";
+      noBtn.style.bottom = "auto";
+    } else {
+      noBtn.style.top = "auto";
+      noBtn.style.bottom = "10px";
+    }
+  });
+}
+
+// ==============================
+// PREVENT RIGHT-CLICK AND IMAGE DRAG
+// ==============================
+
 document.addEventListener("contextmenu", (event) => {
   event.preventDefault();
 });
@@ -124,3 +161,25 @@ document.addEventListener("contextmenu", (event) => {
 document.addEventListener("dragstart", (event) => {
   event.preventDefault();
 });
+
+// ==============================
+// POPUP ANIMATION
+// ==============================
+
+const style = document.createElement("style");
+
+style.textContent = `
+  @keyframes popupEffect {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.5);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+`;
+
+document.head.appendChild(style);
