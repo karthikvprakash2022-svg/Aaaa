@@ -1,29 +1,42 @@
 
-const pictures = document.querySelectorAll(".Picture");
+const pictures = [...document.querySelectorAll(".Picture")];
 
 let zIndexCounter = 1;
 let activePicture = null;
 let previousTouch = null;
 
-// Arrange all pictures in stack order
+// Initialize stack
 pictures.forEach((picture, index) => {
   picture.style.zIndex = index + 1;
   picture.style.pointerEvents = "none";
+
+  const range = 100;
+  const randomX = Math.random() * (range * 2) - range;
+  const randomY = Math.random() * (range * 2) - range;
+  const randomRotate = Math.random() * (range / 2) - range / 4;
+
+  picture.style.top = `${randomY}px`;
+  picture.style.left = `${randomX}px`;
+  picture.style.transform =
+    `translate(-50%, -50%) rotate(${randomRotate}deg)`;
 });
 
-// Only the topmost picture can be dragged
+// Get the topmost card
 function getTopPicture() {
-  const visiblePictures = [...pictures].filter(
+  const visiblePictures = pictures.filter(
     (picture) => picture.style.display !== "none"
   );
 
-  return visiblePictures.reduce((top, picture) => {
-    return Number(picture.style.zIndex) > Number(top.style.zIndex)
+  if (!visiblePictures.length) return null;
+
+  return visiblePictures.reduce((top, picture) =>
+    Number(picture.style.zIndex) > Number(top.style.zIndex)
       ? picture
-      : top;
-  }, visiblePictures[0]);
+      : top
+  );
 }
 
+// Drag movement
 function updateElementPosition(element, event) {
   let movementX, movementY;
 
@@ -44,20 +57,16 @@ function updateElementPosition(element, event) {
     movementY = event.movementY;
   }
 
-  const elementY =
-    parseFloat(element.style.top || 0) + movementY;
+  element.style.left =
+    parseFloat(element.style.left || 0) + movementX + "px";
 
-  const elementX =
-    parseFloat(element.style.left || 0) + movementX;
-
-  element.style.top = elementY + "px";
-  element.style.left = elementX + "px";
+  element.style.top =
+    parseFloat(element.style.top || 0) + movementY + "px";
 }
 
+// Start dragging only the top card
 function startDrag(element, event) {
-  const topPicture = getTopPicture();
-
-  if (element !== topPicture) return;
+  if (element !== getTopPicture()) return;
 
   activePicture = element;
   element.style.zIndex = zIndexCounter++;
@@ -86,26 +95,15 @@ function startDrag(element, event) {
   document.addEventListener("touchend", stopFunction);
 }
 
-// Initialize pictures
+// Attach events to all cards
 pictures.forEach((picture) => {
-  const range = 100;
+  picture.addEventListener("mousedown", (event) =>
+    startDrag(picture, event)
+  );
 
-  const randomX = Math.random() * (range * 2) - range;
-  const randomY = Math.random() * (range * 2) - range;
-  const randomRotate = Math.random() * (range / 2) - range / 4;
-
-  picture.style.top = `${randomY}px`;
-  picture.style.left = `${randomX}px`;
-  picture.style.transform =
-    `translate(-50%, -50%) rotate(${randomRotate}deg)`;
-
-  picture.addEventListener("mousedown", (event) => {
-    startDrag(picture, event);
-  });
-
-  picture.addEventListener("touchstart", (event) => {
-    startDrag(picture, event);
-  });
+  picture.addEventListener("touchstart", (event) =>
+    startDrag(picture, event)
+  );
 });
 
 // YES and NO buttons
