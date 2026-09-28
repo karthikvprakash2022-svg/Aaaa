@@ -1,161 +1,115 @@
-@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&display=swap");
-
-* {
-  box-sizing: border-box;
-  user-select: none;
-  -webkit-user-select: none;
-  -webkit-touch-callout: none;
-}
-
-html,
-body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-}
-
-body {
-  font-family: "Caveat", cursive;
-  overflow: hidden;
-  background: #2b2d42;
-}
-
+@import url("https://fonts.googleapis.com/css2?family=Caveat");
 .Container {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 0;
-  height: 0;
 }
 
-/* PHOTO CARDS */
-
 .Picture {
+  display: inline-block;
   position: absolute;
   top: 0;
   left: 0;
-  width: 400px;
-  border: 5px solid white;
-  border-radius: 4px;
+  border: 5px solid #ffffff;
+  border-radius: 3px;
   background: #f5f5dc;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  transform: translate(50%, 50%);
+  user-select: none;
+  cursor: pointer;
+}
+
+.Picture-video {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 5px solid #fff;
+  border-radius: 3px;
+  background: #3b0d11;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   transform: translate(-50%, -50%);
-  cursor: grab;
-  touch-action: pan-y;
+  user-select: none;
+  cursor: pointer;
 }
 
 .Picture-img {
   display: block;
-  width: 100%;
+  width: 400px;
   height: 400px;
   object-fit: cover;
   pointer-events: none;
 }
 
+.Picture {
+  overflow: hidden;
+  width: 400px;
+}
+
 .Picture-note {
-  min-height: 65px;
-  padding: 12px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  text-align: center;
-  font-size: 1.6rem;
-  color: #222;
-}
-
-.swipe-hint {
-  padding: 0 10px 15px;
-  text-align: center;
-  font: 13px Arial, sans-serif;
-  color: #777;
-  letter-spacing: 1px;
-}
-
-/* QUESTION CARD */
-
-.choice-card {
-  cursor: default;
-}
-
-.choice-buttons {
-  display: flex;
   justify-content: center;
-  gap: 18px;
-  padding: 0 12px 20px;
-}
-
-.choice-buttons button {
-  border: none;
-  border-radius: 30px;
-  padding: 12px 25px;
-  font: bold 16px Arial, sans-serif;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-#yesBtn {
-  background: #ff1744;
-  color: white;
-}
-
-#noBtn {
-  background: white;
-  color: #ff1744;
-}
-
-/* YES POPUP */
-
-#yesMessage {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: min(85vw, 360px);
-  padding: 25px;
-  border-radius: 20px;
-  background: #ff1744;
-  color: white;
+  width: 300px;
+  height: 70px;
+  padding: 12px 24px;
+  font-size: 1.5rem;
   text-align: center;
-  font: bold 22px Arial, sans-serif;
-  z-index: 999999;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  animation: pop 0.3s ease;
 }
 
-[hidden] {
-  display: none !important;
+.Picture-note-video {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 70px;
+  padding: 12px 24px;
+  font-size: 1.5rem;
+  text-align: center;
 }
 
-@keyframes pop {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.6);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
+.Network {
+  display: inline-block;
+  padding: 0 5px;
 }
 
-/* MOBILE */
+.Network-video {
+  display: inline-block;
+  padding: 0 5px;
+}
 
-@media (max-width: 600px) {
-  .Picture {
-    width: min(300px, 84vw);
-  }
+.Network img {
+  width: 1.5rem;
+  aspect-ratio: 1 / 1;
+  vertical-align: middle;
+}
 
-  .Picture-img {
-    height: min(300px, 84vw);
-  }
+.Network-video img {
+  width: 1.5rem;
+  aspect-ratio: 1 / 1;
+  vertical-align: middle;
+}
 
-  .Picture-note {
-    min-height: 58px;
-    font-size: 1.3rem;
-  }
+/* --------------------- */
 
-  .choice-buttons button {
-    padding: 10px 20px;
-    font-size: 14px;
-  }
+/* Other styles          */
+
+/* --------------------- */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Caveat", serif;
+  overflow: hidden;
+  background-color: #2b2d42;
+}
+
+.Picture-img-video {
+  width: 500px;
+  height: 550px;
+  object-fit: cover;
+  display: block;
 }
