@@ -61,3 +61,10 @@ pictures.forEach((picture) => {
   picture.addEventListener("mousedown", startFunction);
   picture.addEventListener("touchstart", startFunction);
 });
+document.getElementById("yesBtn").addEventListener("click", () => {
+  alert("Aww ❤️ I knew it! 💕");
+});
+
+document.getElementById("noBtn").addEventListener("click", () => {
+  alert("Are you sure? 🥺💔");
+});
