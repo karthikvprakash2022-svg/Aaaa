@@ -92,11 +92,7 @@ pictures.forEach((picture) => {
     startDrag(picture, event);
   });
 
-  // Double-click to lock a photo in its current position
-  picture.addEventListener("dblclick", () => {
-    lockedPictures.add(picture);
-    picture.style.cursor = "default";
-  });
+
 });
 
 /* Disable right-click */
