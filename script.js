@@ -1,27 +1,23 @@
 
 const pictures = document.querySelectorAll(".Picture");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
 
-let previousTouch = undefined;
+let previousTouch = null;
 let zIndexCounter = 1;
 
-// Photos that are locked after swapping
-const lockedPictures = new Set();
-
+// Drag photos
 function updateElementPosition(element, event) {
-  if (lockedPictures.has(element)) return;
-
-  let movementX, movementY;
+  let movementX = 0;
+  let movementY = 0;
 
   if (event.type === "touchmove") {
     const touch = event.touches[0];
 
-    movementX = previousTouch
-      ? touch.clientX - previousTouch.clientX
-      : 0;
-
-    movementY = previousTouch
-      ? touch.clientY - previousTouch.clientY
-      : 0;
+    if (previousTouch) {
+      movementX = touch.clientX - previousTouch.clientX;
+      movementY = touch.clientY - previousTouch.clientY;
+    }
 
     previousTouch = touch;
   } else {
@@ -29,54 +25,43 @@ function updateElementPosition(element, event) {
     movementY = event.movementY;
   }
 
-  const elementY =
-    parseFloat(element.style.top || 0) + movementY;
+  element.style.left =
+    (parseFloat(element.style.left) || 0) + movementX + "px";
 
-  const elementX =
-    parseFloat(element.style.left || 0) + movementX;
-
-  element.style.top = elementY + "px";
-  element.style.left = elementX + "px";
+  element.style.top =
+    (parseFloat(element.style.top) || 0) + movementY + "px";
 }
 
 function startDrag(element, event) {
-  // Do not move a locked photo
-  if (lockedPictures.has(element)) return;
-
   element.style.zIndex = zIndexCounter++;
 
-  const updateFunction = (event) =>
-    updateElementPosition(element, event);
+  const updateFunction = (e) => updateElementPosition(element, e);
 
-  const stopFunction = () =>
-    stopDrag({
-      update: updateFunction,
-      stop: stopFunction
-    });
+  const stopFunction = () => {
+    previousTouch = null;
+
+    document.removeEventListener("mousemove", updateFunction);
+    document.removeEventListener("touchmove", updateFunction);
+    document.removeEventListener("mouseup", stopFunction);
+    document.removeEventListener("touchend", stopFunction);
+  };
 
   document.addEventListener("mousemove", updateFunction);
-  document.addEventListener("touchmove", updateFunction);
+  document.addEventListener("touchmove", updateFunction, {
+    passive: true
+  });
 
   document.addEventListener("mouseup", stopFunction);
   document.addEventListener("touchend", stopFunction);
 }
 
-function stopDrag(functions) {
-  previousTouch = undefined;
-
-  document.removeEventListener("mousemove", functions.update);
-  document.removeEventListener("touchmove", functions.update);
-
-  document.removeEventListener("mouseup", functions.stop);
-  document.removeEventListener("touchend", functions.stop);
-}
-
+// Initialize photo positions and dragging
 pictures.forEach((picture) => {
   const range = 100;
 
-  const randomX = Math.random() * (range * 2) - range;
-  const randomY = Math.random() * (range * 2) - range;
-  const randomRotate = Math.random() * (range / 2) - range / 4;
+  const randomX = Math.random() * range * 2 - range;
+  const randomY = Math.random() * range * 2 - range;
+  const randomRotate = Math.random() * 50 - 25;
 
   picture.style.top = `${randomY}px`;
   picture.style.left = `${randomX}px`;
@@ -85,65 +70,88 @@ pictures.forEach((picture) => {
     `translate(-50%, -50%) rotate(${randomRotate}deg)`;
 
   picture.addEventListener("mousedown", (event) => {
+    if (event.target.closest(".choice-buttons")) return;
     startDrag(picture, event);
   });
 
   picture.addEventListener("touchstart", (event) => {
+    if (event.target.closest(".choice-buttons")) return;
     startDrag(picture, event);
+  }, { passive: true });
+});
+
+// Prevent button interactions from dragging the photo
+[yesBtn, noBtn].forEach((button) => {
+  button.addEventListener("mousedown", (event) => {
+    event.stopPropagation();
   });
 
+  button.addEventListener("touchstart", (event) => {
+    event.stopPropagation();
+  });
+});
 
+// YES button
+yesBtn.addEventListener("click", (event) => {
+  event.stopPropagation();
 
-/* Disable right-click */
+  noBtn.style.display = "none";
+
+  let message = document.getElementById("yesMessage");
+
+  if (!message) {
+    message = document.createElement("div");
+    message.id = "yesMessage";
+    message.textContent = "YAY! ❤️ I KNEW YOU WOULD SAY YES! 🥰";
+
+    message.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #ff1744;
+      color: white;
+      padding: 25px;
+      border-radius: 20px;
+      z-index: 999999;
+      text-align: center;
+      width: 85%;
+      font-family: Arial, sans-serif;
+      font-size: 22px;
+    `;
+
+    document.body.appendChild(message);
+  }
+});
+
+// NO button moves away
+function moveNoButton(event) {
+  event.stopPropagation();
+
+  const maxX = window.innerWidth - noBtn.offsetWidth - 10;
+  const maxY = window.innerHeight - noBtn.offsetHeight - 10;
+
+  noBtn.style.position = "fixed";
+  noBtn.style.left =
+    Math.max(10, Math.random() * maxX) + "px";
+  noBtn.style.top =
+    Math.max(10, Math.random() * maxY) + "px";
+
+  noBtn.style.zIndex = "999999";
+}
+
+noBtn.addEventListener("click", moveNoButton);
+
+noBtn.addEventListener("touchstart", (event) => {
+  event.preventDefault();
+  moveNoButton(event);
+}, { passive: false });
+
+// Disable right-click and image dragging
 document.addEventListener("contextmenu", (event) => {
   event.preventDefault();
 });
 
-/* Disable copy and cut */
-document.addEventListener("copy", (event) => {
-  event.preventDefault();
-});
-
-document.addEventListener("cut", (event) => {
-  event.preventDefault();
-});
-
-/* Disable image dragging */
 document.addEventListener("dragstart", (event) => {
   event.preventDefault();
-});
-
-/* Disable text selection */
-document.addEventListener("selectstart", (event) => {
-  event.preventDefault();
-});
-yesBtn.addEventListener("click", (e) => {
-  e.stopPropagation();
-
-  // Keep all photos movable
-  lockedPictures.clear();
-
-  // Hide NO button
-  noBtn.style.display = "none";
-
-  // Show a cute message
-  const message = document.createElement("h2");
-  message.textContent = "YAY! ❤️ I KNEW YOU WOULD SAY YES! 🥰";
-
-  message.style.cssText = `
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: #ff1744;
-    color: white;
-    padding: 25px;
-    border-radius: 20px;
-    z-index: 999999;
-    text-align: center;
-    width: 85%;
-    font-family: Arial, sans-serif;
-  `;
-
-  document.body.appendChild(message);
 });
