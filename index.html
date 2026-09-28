@@ -1,299 +1,372 @@
-<!doctype html>
 
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Aruna ❤️</title>
 
-  <meta charset="UTF-8" />
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+* {
+  box-sizing: border-box;
+}
 
-  <title>HAPPY BIRTHDAY ARUNA</title>
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #2b2d42;
+  color: white;
+  font-family: 'Caveat', cursive;
+  overflow-x: hidden;
+}
 
-  <link rel="stylesheet" href="./style.css" />
+h1 {
+  text-align: center;
+  font-size: 34px;
+  margin: 20px 0 10px;
+}
 
+#stage {
+  position: relative;
+  width: 100%;
+  height: 78vh;
+  min-height: 450px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.Picture {
+  position: absolute;
+  width: min(82vw, 350px);
+  padding: 12px;
+  background: #fff;
+  color: #222;
+  border-radius: 5px;
+  box-shadow: 0 8px 25px #0005;
+  text-align: center;
+  touch-action: pan-y;
+  user-select: none;
+  transition: transform .35s ease, opacity .35s ease;
+}
+
+.Picture img {
+  width: 100%;
+  height: 390px;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.note {
+  font-size: 29px;
+  padding: 10px 4px 3px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#question {
+  font-size: 25px;
+  margin: 8px 0;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 10px 0;
+}
+
+button {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+#yesBtn {
+  background: #ff4d88;
+  color: white;
+}
+
+#noBtn {
+  background: #ddd;
+  color: #222;
+  position: relative;
+}
+
+#message {
+  text-align: center;
+  font-family: 'Caveat', cursive;
+  font-size: 30px;
+  color: #ffd6e7;
+  padding: 20px;
+  line-height: 1.5;
+}
+
+#gallery {
+  display: none;
+  padding: 20px 12px 40px;
+}
+
+#gallery h2 {
+  text-align: center;
+  font-size: 34px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.gallery-grid .Picture {
+  position: relative;
+  width: 100%;
+  transform: none;
+}
+
+.gallery-grid .Picture img {
+  height: 300px;
+}
+
+.gallery-grid .Picture-video img {
+  height: 300px;
+}
+
+.Picture-video {
+  background: white;
+  color: #222;
+}
+
+.Picture-video .note {
+  font-size: 21px;
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 10px;
+}
+
+.links a {
+  color: #ff4d88;
+  font-family: 'Poppins', sans-serif;
+  text-decoration: none;
+}
+
+@media (max-width: 480px) {
+  .Picture {
+    width: 82vw;
+  }
+
+  .Picture img {
+    height: 350px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="Container">
+<h1>Happy Birthday Aruna 🎂❤️</h1>
 
-    <!-- Main photo: shown after YES -->
+<div id="stage">
 
-    <div class="Picture-video extra-card" id="video">
+  <!-- PHOTO 1 -->
+  <div class="Picture" data-step="0">
+    <img src="IMG_2495.jpeg" alt="Birthday photo 1">
+    <div class="note">Happy 🎉❤️</div>
+  </div>
 
-      <img
+  <!-- PHOTO 2 -->
+  <div class="Picture hidden" data-step="1">
+    <img src="IMG_2491.jpeg" alt="Birthday photo 2">
+    <div class="note">Birthday 🎂💕</div>
+  </div>
 
-        class="Picture-img-video"
+  <!-- PHOTO 3 + QUESTION -->
+  <div class="Picture hidden" data-step="2">
+    <img src="IMG_2496.jpeg" alt="Birthday photo 3">
+    <div class="note">Celebrate 🎉💖</div>
 
-        src="002E8231-EEC9-4B09-ADD1-39DFD4191492.jpeg"
+    <div id="question">Do you love me? ❤️</div>
 
-        alt=""
-
-      />
-
-      <div class="Picture-note-video">
-
-        <span>
-
-          WITH LOVINGLY YOUR KARTHIK💞🤗 -
-
-          <a
-
-            class="Network-video"
-
-            href="https://www.instagram.com/karthikvprakash_/profilecard/?igsh=Y3dnNjl1aXN0bHVp"
-
-            target="_blank"
-
-          >
-
-            <img
-
-              class="insta"
-
-              src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
-
-              alt="instagram"
-
-            />
-
-          </a>
-
-          <a
-
-            class="Network"
-
-            href="https://wa.me/7994565934"
-
-            target="_blank"
-
-          >
-
-            <img
-
-              src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-
-              alt="whatsapp"
-
-            />
-
-          </a>
-
-        </span>
-
-      </div>
-
+    <div class="buttons">
+      <button id="yesBtn">YES ❤️</button>
+      <button id="noBtn">NO 😜</button>
     </div>
 
-    <!-- FIRST PHOTO -->
+    <div id="message" class="hidden">
+      You know how much you mean to me. ❤️
+      <br>
+      Happy Birthday, my dear Aruna! 💖
+    </div>
+  </div>
 
-    <div class="Picture swipe-card">
+</div>
 
-      <img class="Picture-img" src="IMG_2495.jpeg" alt="" />
+<!-- ALL REMAINING PHOTOS -->
+<section id="gallery">
+  <h2>Our Beautiful Memories ❤️</h2>
 
-      <div class="Picture-note">
+  <div class="gallery-grid">
 
-        <span>Happy 🎉❤️</span>
-
-      </div>
-
+    <div class="Picture">
+      <img src="IMG_2494.jpeg" alt="Birthday memory">
+      <div class="note">Gift 🎁❤️</div>
     </div>
 
-    <!-- SECOND PHOTO -->
-
-    <div class="Picture swipe-card">
-
-      <img class="Picture-img" src="IMG_2491.jpeg" alt="" />
-
-      <div class="Picture-note">
-
-        <span>Birthday 🎂💕</span>
-
-      </div>
-
+    <div class="Picture">
+      <img src="IMG_2495.jpeg" alt="Birthday memory">
+      <div class="note">Love 💕🎈</div>
     </div>
 
-    <!-- THIRD PHOTO: YES / NO OPTIONS -->
-
-    <div class="Picture swipe-card question-card">
-
-      <img class="Picture-img" src="IMG_2496.jpeg" alt="" />
-
-      <div class="Picture-note question-note">
-
-        <span>Celebrate 🎉💖</span>
-
-        <div class="question-text">
-
-          Do you love me? ❤️
-
-        </div>
-
-        <div class="button-area" id="buttonArea">
-
-          <button id="yesBtn">YES ❤️</button>
-
-          <button id="noBtn">NO 💔</button>
-
-        </div>
-
-        <div id="loveMessage" class="love-message"></div>
-
-      </div>
-
+    <div class="Picture">
+      <img src="IMG_2493.jpeg" alt="Birthday memory">
+      <div class="note">Joy ❤️🎂</div>
     </div>
 
-    <!-- REMAINING PHOTOS: HIDDEN UNTIL YES -->
-
-    <div class="Picture extra-card">
-
-      <img class="Picture-img" src="IMG_2494.jpeg" alt="" />
-
-      <div class="Picture-note">
-
-        <span>Gift 🎁❤️</span>
-
-      </div>
-
+    <div class="Picture">
+      <img src="IMG_2492.jpeg" alt="Birthday memory">
+      <div class="note">Fun 🎈💖</div>
     </div>
 
-    <div class="Picture extra-card">
-
-      <img class="Picture-img" src="IMG_2495.jpeg" alt="" />
-
-      <div class="Picture-note">
-
-        <span>Love 💕🎈</span>
-
-      </div>
-
+    <div class="Picture">
+      <img src="IMG_2490.jpeg" alt="Birthday memory">
+      <div class="note">Hugs 💖🎂</div>
     </div>
 
-    <div class="Picture extra-card">
-
-      <img class="Picture-img" src="IMG_2493.jpeg" alt="" />
-
-      <div class="Picture-note">
-
-        <span>Joy ❤️🎂</span>
-
-      </div>
-
+    <div class="Picture">
+      <img src="IMG_2488.jpeg" alt="Birthday memory">
+      <div class="note">Smile 🎉💕</div>
     </div>
 
-    <div class="Picture extra-card">
-
-      <img class="Picture-img" src="IMG_2492.jpeg" alt="" />
-
-      <div class="Picture-note">
-
-        <span>Fun 🎈💖</span>
-
-      </div>
-
+    <div class="Picture">
+      <img src="IMG_2489.jpeg" alt="Birthday memory">
+      <div class="note">Yay 🎉💕</div>
     </div>
 
-    <div class="Picture extra-card">
-
-      <img class="Picture-img" src="IMG_2490.jpeg" alt="" />
-
-      <div class="Picture-note">
-
-        <span>Hugs 💖🎂</span>
-
-      </div>
-
+    <div class="Picture">
+      <img src="F3B3EB89-F079-4EA7-9682-0309338778D0.png" alt="Dua Lipa">
+      <div class="note">Dua Lipa ❤️</div>
     </div>
 
-    <div class="Picture extra-card">
-
-      <img class="Picture-img" src="IMG_2488.jpeg" alt="" />
-
-      <div class="Picture-note">
-
-        <span>Smile 🎉💕</span>
-
-      </div>
-
+    <div class="Picture">
+      <img src="B1DAB360-6248-43C3-8F19-F37FAA73132F.png" alt="Party memory">
+      <div class="note">Party 🎂❤️</div>
     </div>
 
-    <div class="Picture extra-card">
-
-      <img class="Picture-img" src="IMG_2489.jpeg" alt="" />
-
-      <div class="Picture-note">
-
-        <span>Yay 🎉💕</span>
-
-      </div>
-
+    <div class="Picture">
+      <img src="19042C7F-AA8E-4839-B449-0B39758CB5CD.jpeg" alt="Birthday memory">
+      <div class="note">Hugs 💖🎂</div>
     </div>
 
-    <div class="Picture extra-card">
-
-      <img
-
-        class="Picture-img"
-
-        src="F3B3EB89-F079-4EA7-9682-0309338778D0.png"
-
-        alt=""
-
-      />
-
-      <div class="Picture-note">
-
-        <span>Dua Lipa❤️</span>
-
+    <!-- ORIGINAL MAIN PHOTO CARD -->
+    <div class="Picture Picture-video">
+      <img src="002E8231-EEC9-4B09-ADD1-39DFD4191492.jpeg" alt="Our special photo">
+      <div class="note">
+        WITH LOVINGLY YOUR KARTHIK 💞🤗
       </div>
 
-    </div>
-
-    <div class="Picture extra-card">
-
-      <img
-
-        class="Picture-img"
-
-        src="B1DAB360-6248-43C3-8F19-F37FAA73132F.png"
-
-        alt=""
-
-      />
-
-      <div class="Picture-note">
-
-        <span>Party 🎂❤️</span>
-
+      <div class="links">
+        <a href="https://www.instagram.com/" target="_blank">Instagram</a>
+        <a href="https://www.whatsapp.com/" target="_blank">WhatsApp</a>
       </div>
-
-    </div>
-
-    <div class="Picture extra-card">
-
-      <img
-
-        class="Picture-img"
-
-        src="19042C7F-AA8E-4839-B449-0B39758CB5CD.jpeg"
-
-        alt=""
-
-      />
-
-      <div class="Picture-note">
-
-        <span>Hugs 💖🎂</span>
-
-      </div>
-
     </div>
 
   </div>
+</section>
 
-  <script src="./script.js"></script>
+<script>
+const cards = [...document.querySelectorAll('#stage .Picture')];
+const stage = document.getElementById('stage');
+const gallery = document.getElementById('gallery');
+const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
+const message = document.getElementById('message');
+
+let current = 0;
+let startX = 0;
+let startY = 0;
+let noCount = 0;
+
+function showCard(index) {
+  cards.forEach((card, i) => {
+    card.classList.toggle('hidden', i !== index);
+  });
+}
+
+function nextCard() {
+  if (current < 2) {
+    current++;
+    showCard(current);
+  }
+}
+
+stage.addEventListener('pointerdown', (event) => {
+  if (event.target.closest('button')) return;
+
+  startX = event.clientX;
+  startY = event.clientY;
+});
+
+stage.addEventListener('pointerup', (event) => {
+  if (event.target.closest('button')) return;
+
+  const diffX = event.clientX - startX;
+  const diffY = event.clientY - startY;
+
+  if (Math.abs(diffX) > 80 && Math.abs(diffX) > Math.abs(diffY)) {
+    nextCard();
+  }
+});
+
+yesBtn.addEventListener('click', () => {
+  stage.style.display = 'none';
+  gallery.style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+noBtn.addEventListener('click', () => {
+  noCount++;
+
+  if (noCount <= 5) {
+    const parent = noBtn.parentElement;
+    const maxX = Math.max(0, parent.clientWidth - noBtn.offsetWidth - 20);
+    const maxY = 100;
+
+    noBtn.style.position = 'relative';
+    noBtn.style.left = (Math.random() * maxX - maxX / 2) + 'px';
+    noBtn.style.top = (Math.random() * maxY - maxY / 2) + 'px';
+  } else {
+    document.getElementById('question').classList.add('hidden');
+    yesBtn.classList.add('hidden');
+    noBtn.classList.add('hidden');
+
+    message.textContent =
+      "Even if you say no, you will always have a special place in my heart. ❤️ Happy Birthday, Aruna! 💖";
+
+    message.classList.remove('hidden');
+  }
+});
+
+showCard(0);
+</script>
 
 </body>
-
 </html>
