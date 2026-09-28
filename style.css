@@ -192,9 +192,10 @@ body {
 
 /* FIXED MAIN FRAME */
 /* MAIN FRAME SIZE */
+/* FIXED MAIN FRAME - SIZE */
 .main-frame {
-  width: 350px;
-  height: 450px;
+  width: 400px;   /* Change width here */
+  height: 550px;  /* Change height here */
   position: fixed;
   overflow: hidden;
 }
