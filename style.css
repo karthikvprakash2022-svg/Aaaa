@@ -360,3 +360,35 @@ body {
     padding: 10px 20px;
   }
 }
+/* MAIN FRAME SOCIAL LINKS */
+
+#mainFrame {
+  display: flex;
+  flex-direction: column;
+}
+
+#mainFrame .main-frame-img {
+  width: 100%;
+  height: calc(100% - 65px);
+  object-fit: cover;
+}
+
+#mainFrame .Picture-note {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  min-height: 65px;
+  padding: 10px;
+  background: #3b0d11;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+#mainFrame .Picture-note a {
+  color: white;
+  text-decoration: none;
+  pointer-events: auto;
+  position: relative;
+  z-index: 99999;
+}
