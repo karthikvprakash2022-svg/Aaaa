@@ -68,3 +68,15 @@ document.getElementById("yesBtn").addEventListener("click", () => {
 document.getElementById("noBtn").addEventListener("click", () => {
   alert("Are you sure? 🥺💔");
 });
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+
+yesBtn.addEventListener("click", (event) => {
+  event.stopPropagation();
+  alert("Aww ❤️ I knew it! 💕");
+});
+
+noBtn.addEventListener("click", (event) => {
+  event.stopPropagation();
+  alert("Are you sure? 🥺💔");
+});
