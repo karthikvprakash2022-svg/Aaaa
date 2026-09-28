@@ -24,19 +24,21 @@ page1.style.zIndex = zIndex++;
 page2.style.zIndex = zIndex++;
 page3.style.zIndex = zIndex++;
 
-// ---------------------------------
-// SWIPE BETWEEN FIRST TWO PAGES
-// ---------------------------------
+// SWIPE AND CLICK TO MOVE BETWEEN PAGES
 
-function showNextPage() {
-  if (currentPage === 1) {
-    page1.hidden = true;
-    page2.hidden = false;
-    currentPage = 2;
-  } else if (currentPage === 2) {
-    page2.hidden = true;
-    page3.hidden = false;
-    currentPage = 3;
+let currentPage = 1;
+
+function showPage(pageNumber) {
+  page1.hidden = pageNumber !== 1;
+  page2.hidden = pageNumber !== 2;
+  page3.hidden = pageNumber !== 3;
+
+  currentPage = pageNumber;
+}
+
+function goNext() {
+  if (currentPage < 3) {
+    showPage(currentPage + 1);
   }
 }
 
@@ -44,27 +46,29 @@ function enableSwipe(page) {
   let startX = 0;
   let startY = 0;
 
-  page.addEventListener("pointerdown", (event) => {
-    startX = event.clientX;
-    startY = event.clientY;
+  page.addEventListener("pointerdown", (e) => {
+    startX = e.clientX;
+    startY = e.clientY;
   });
 
-  page.addEventListener("pointerup", (event) => {
-    const diffX = event.clientX - startX;
-    const diffY = event.clientY - startY;
+  page.addEventListener("pointerup", (e) => {
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
 
-    if (
-      Math.abs(diffX) > 60 &&
-      Math.abs(diffX) > Math.abs(diffY)
-    ) {
-      showNextPage();
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+      goNext();
     }
+  });
+
+  // Click the card to go to the next page too
+  page.addEventListener("click", () => {
+    goNext();
   });
 }
 
+showPage(1);
 enableSwipe(page1);
 enableSwipe(page2);
-
 // ---------------------------------
 // YES BUTTON: REVEAL ALL PHOTOS
 // ---------------------------------
