@@ -1,157 +1,105 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HAPPY BIRTHDAY ARUNA</title>
-  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <div class="Container">
 
-    <!-- Main card -->
-    <div class="Picture-video" id="video">
-      <img
-        class="Picture-img-video"
-        src="002E8231-EEC9-4B09-ADD1-39DFD4191492.jpeg"
-        alt=""
-      />
+  <main class="Container" id="photoContainer">
 
-      <div class="Picture-note-video">
-        <span>
-          WITH LOVINGLY KARTHIK -
-
-          <a
-            class="Network-video"
-            href="https://www.instagram.com/karthikvprakash_/"
-            target="_blank"
-            rel="noopener"
-          >
-            <img
-              class="insta"
-              src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
-              alt="Instagram"
-            />
-          </a>
-
-          <a
-            class="Network"
-            href="https://wa.me/7994565934"
-            target="_blank"
-            rel="noopener"
-          >
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-              alt="WhatsApp"
-            />
-          </a>
-        </span>
-      </div>
+    <!-- PAGE 1 -->
+    <div class="Picture" data-page="1">
+      <img class="Picture-img" src="IMG_2489.jpeg" alt="Happy">
+      <div class="Picture-note">Happy 🎉❤️</div>
     </div>
 
-    <!-- Photo cards -->
-
-    <div class="Picture">
-      <img class="Picture-img" src="IMG_2489.jpeg" alt="" />
-      <div class="Picture-note"><span>Happy 🎉❤️</span></div>
+    <!-- PAGE 2 -->
+    <div class="Picture" data-page="2">
+      <img class="Picture-img" src="IMG_2492.jpeg" alt="Birthday">
+      <div class="Picture-note">Birthday 🎂💕</div>
     </div>
 
-    <div class="Picture">
-      <img class="Picture-img" src="IMG_2492.jpeg" alt="" />
-      <div class="Picture-note"><span>Birthday 🎂💕</span></div>
-    </div>
+    <!-- PAGE 3: YES / NO QUESTION -->
+    <div class="Picture choice-card" data-page="3">
+      <img class="Picture-img"
+           src="F3B3EB89-F079-4EA7-9682-0309338778D0.png"
+           alt="Question">
 
-    <div class="Picture">
-      <img class="Picture-img" src="IMG_2491.jpeg" alt="" />
-      <div class="Picture-note"><span>Celebrate 🎉💖</span></div>
-    </div>
-
-    <div class="Picture">
-      <img class="Picture-img" src="IMG_2494.jpeg" alt="" />
-      <div class="Picture-note"><span>Gift 🎁❤️</span></div>
-    </div>
-
-    <div class="Picture">
-      <img class="Picture-img" src="IMG_2493.jpeg" alt="" />
-      <div class="Picture-note"><span>Love 💕🎈</span></div>
-    </div>
-
-    <div class="Picture">
-      <img class="Picture-img" src="IMG_2495.jpeg" alt="" />
-      <div class="Picture-note"><span>Joy ❤️🎂</span></div>
-    </div>
-
-    <div class="Picture">
-      <img class="Picture-img" src="IMG_2495.jpeg" alt="" />
-      <div class="Picture-note"><span>Fun 🎈💖</span></div>
-    </div>
-
-    <div class="Picture">
-      <img class="Picture-img" src="IMG_2490.jpeg" alt="" />
-      <div class="Picture-note"><span>Hugs 💖🎂</span></div>
-    </div>
-
-    <div class="Picture">
-      <img class="Picture-img" src="IMG_2496.jpeg" alt="" />
-      <div class="Picture-note"><span>Smile 🎉💕</span></div>
-    </div>
-
-    <div class="Picture">
-      <img class="Picture-img" src="alapuza.jpeg" alt="" />
-      <div class="Picture-note"><span>Yay 🎉💕</span></div>
-    </div>
-
-    <!-- YES / NO card -->
-
-    <div class="Picture choice-card">
-      <img
-        class="Picture-img"
-        src="F3B3EB89-F079-4EA7-9682-0309338778D0.png"
-        alt=""
-      />
-
-      <div class="Picture-note">
-        <span>IF YES SWAP OR BLOCK ❤️</span>
-      </div>
+      <div class="Picture-note">IF YES SWAP OR BLOCK ❤️</div>
 
       <div class="choice-buttons">
-        <button id="yesBtn" type="button">YES ❤️</button>
-        <button id="noBtn" type="button">NO 💔</button>
+        <button id="yesBtn">YES ❤️</button>
+        <button id="noBtn">NO 💔</button>
       </div>
     </div>
 
-    <!-- HIDDEN PAGES: SHOW ONLY AFTER YES -->
-
-    <div id="hiddenPages" style="display: none;">
+    <!-- HIDDEN PHOTOS: SHOW AFTER YES -->
+    <section id="hiddenPages" hidden>
 
       <div class="Picture">
-        <img
-          class="Picture-img"
-          src="B1DAB360-6248-43C3-8F19-F37FAA73132F.png"
-          alt=""
-        />
-        <div class="Picture-note">
-          <span>I KNOW YOU WILL LAUGH 🎂❤️</span>
-        </div>
+        <img class="Picture-img" src="IMG_2491.jpeg" alt="">
+        <div class="Picture-note">Celebrate 🎉💖</div>
       </div>
 
       <div class="Picture">
-        <img
-          class="Picture-img"
-          src="19042C7F-AA8E-4839-B449-0B39758CB5CD.jpeg"
-          alt=""
-        />
-        <div class="Picture-note">
-          <span>ARUNA 💖🎂</span>
-        </div>
+        <img class="Picture-img" src="IMG_2494.jpeg" alt="">
+        <div class="Picture-note">Gift 🎁❤️</div>
       </div>
 
-    </div>
+      <div class="Picture">
+        <img class="Picture-img" src="IMG_2493.jpeg" alt="">
+        <div class="Picture-note">Love 💕🎈</div>
+      </div>
 
+      <div class="Picture">
+        <img class="Picture-img" src="IMG_2495.jpeg" alt="">
+        <div class="Picture-note">Joy ❤️🎂</div>
+      </div>
+
+      <div class="Picture">
+        <img class="Picture-img" src="IMG_2495.jpeg" alt="">
+        <div class="Picture-note">Fun 🎈💖</div>
+      </div>
+
+      <div class="Picture">
+        <img class="Picture-img" src="IMG_2490.jpeg" alt="">
+        <div class="Picture-note">Hugs 💖🎂</div>
+      </div>
+
+      <div class="Picture">
+        <img class="Picture-img" src="IMG_2496.jpeg" alt="">
+        <div class="Picture-note">Smile 🎉💕</div>
+      </div>
+
+      <div class="Picture">
+        <img class="Picture-img" src="alapuza.jpeg" alt="">
+        <div class="Picture-note">Yay 🎉💕</div>
+      </div>
+
+      <div class="Picture">
+        <img class="Picture-img"
+             src="B1DAB360-6248-43C3-8F19-F37FAA73132F.png"
+             alt="">
+        <div class="Picture-note">I KNOW YOU WILL LAUGH 🎂❤️</div>
+      </div>
+
+      <div class="Picture">
+        <img class="Picture-img"
+             src="19042C7F-AA8E-4839-B449-0B39758CB5CD.jpeg"
+             alt="">
+        <div class="Picture-note">ARUNA 💖🎂</div>
+      </div>
+
+    </section>
+  </main>
+
+  <div id="yesMessage" hidden>
+    YAY! ❤️ I KNEW YOU WOULD SAY YES! 🥰
   </div>
 
-  <script src="./script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
