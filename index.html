@@ -1,151 +1,286 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>HAPPY BIRTHDAY ARUNA</title>
-  <link rel="stylesheet" href="./style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Aruna ❤️</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #ffe0ec, #fff5f8);
+      color: #333;
+      text-align: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      color: #ff4081;
+      font-size: 32px;
+      margin: 20px 0;
+      text-shadow: 2px 2px 5px #ffc0cb;
+    }
+
+    .main-photo {
+      width: 90%;
+      max-width: 350px;
+      border-radius: 20px;
+      box-shadow: 0 5px 20px #e7a5c0;
+      margin: 20px auto;
+    }
+
+    .caption {
+      font-size: 20px;
+      color: #e91e63;
+      margin: 15px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    button {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 25px;
+      font-size: 18px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #yesBtn {
+      background: #ff4081;
+      color: white;
+    }
+
+    #noBtn {
+      background: #777;
+      color: white;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .gallery {
+      position: relative;
+      min-height: 80vh;
+      margin-top: 30px;
+    }
+
+    .photo-card {
+      position: absolute;
+      width: 180px;
+      background: white;
+      padding: 8px 8px 15px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px #d8a0b6;
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+    }
+
+    .photo-card img {
+      width: 100%;
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    .photo-card p {
+      color: #e91e63;
+      margin-top: 8px;
+      font-size: 16px;
+    }
+
+    .final-note {
+      font-size: 23px;
+      color: #e91e63;
+      margin: 40px auto;
+      max-width: 600px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 500px) {
+      h1 {
+        font-size: 26px;
+      }
+
+      .photo-card {
+        width: 145px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <div class="Container">
 
-    <!-- Main photo: unchanged -->
-    <div class="Picture-video" id="video">
-      <img
-        class="Picture-img-video"
-        src="002E8231-EEC9-4B09-ADD1-39DFD4191492.jpeg"
-        alt=""
-      />
+  <h1>Happy Birthday Aruna ❤️🎂</h1>
 
-      <div class="Picture-note-video">
-        <span>
-          WITH LOVINGLY YOUR KARTHIK💞🤗 -
-          <a
-            class="Network-video"
-            href="https://www.instagram.com/karthikvprakash_/profilecard/?igsh=Y3dnNjl1aXN0bHVp"
-            target="_blank"
-          >
-            <img
-              class="insta"
-              src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
-              alt="instagram"
-            />
-          </a>
+  <div id="intro">
+    <img
+      src="002E8231-EEC9-4B09-ADD1-39DFD4191492.jpeg"
+      class="main-photo"
+      alt="Birthday photo"
+    >
 
-          <a
-            class="Network"
-            href="https://wa.me/7994565934"
-            target="_blank"
-          >
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-              alt="whatsapp"
-            />
-          </a>
-        </span>
-      </div>
+    <p class="caption">
+      WITH LOVINGLY YOUR KARTHIK💞🤗 -
+    </p>
+
+    <h2>Do you love me? ❤️</h2>
+
+    <div class="buttons">
+      <button id="yesBtn">YES ❤️</button>
+      <button id="noBtn">NO 💔</button>
     </div>
-
-    <!-- Photo 1: unchanged -->
-    <div class="Picture">
-      <img class="Picture-img" src="IMG_2495.jpeg" alt="" />
-      <div class="Picture-note">
-        <span>Happy 🎉❤️</span>
-      </div>
-    </div>
-
-    <!-- Photo 2: YES / NO question -->
-    <div class="Picture" id="questionCard">
-      <img class="Picture-img" src="IMG_2491.jpeg" alt="" />
-
-      <div class="Picture-note question-note">
-        <span>Birthday 🎂💕</span>
-
-        <div class="question-text">
-          Do you love me? ❤️
-        </div>
-
-        <div class="button-area" id="buttonArea">
-          <button id="yesBtn">YES ❤️</button>
-          <button id="noBtn">NO 💔</button>
-        </div>
-
-        <div id="loveMessage" class="love-message">
-          Enikku ninne orupaadu ishtamaanu ❤️🥹
-        </div>
-      </div>
-    </div>
-
-    <!-- Remaining photos: hidden until YES -->
-    <div class="Picture hidden-photo">
-      <img class="Picture-img" src="IMG_2496.jpeg" alt="" />
-      <div class="Picture-note"><span>Celebrate 🎉💖</span></div>
-    </div>
-
-    <div class="Picture hidden-photo">
-      <img class="Picture-img" src="IMG_2494.jpeg" alt="" />
-      <div class="Picture-note"><span>Gift 🎁❤️</span></div>
-    </div>
-
-    <div class="Picture hidden-photo">
-      <img class="Picture-img" src="IMG_2495.jpeg" alt="" />
-      <div class="Picture-note"><span>Love 💕🎈</span></div>
-    </div>
-
-    <div class="Picture hidden-photo">
-      <img class="Picture-img" src="IMG_2493.jpeg" alt="" />
-      <div class="Picture-note"><span>Joy ❤️🎂</span></div>
-    </div>
-
-    <div class="Picture hidden-photo">
-      <img class="Picture-img" src="IMG_2492.jpeg" alt="" />
-      <div class="Picture-note"><span>Fun 🎈💖</span></div>
-    </div>
-
-    <div class="Picture hidden-photo">
-      <img class="Picture-img" src="IMG_2490.jpeg" alt="" />
-      <div class="Picture-note"><span>Hugs 💖🎂</span></div>
-    </div>
-
-    <div class="Picture hidden-photo">
-      <img class="Picture-img" src="IMG_2488.jpeg" alt="" />
-      <div class="Picture-note"><span>Smile 🎉💕</span></div>
-    </div>
-
-    <div class="Picture hidden-photo">
-      <img class="Picture-img" src="IMG_2489.jpeg" alt="" />
-      <div class="Picture-note"><span>Yay 🎉💕</span></div>
-    </div>
-
-    <div class="Picture hidden-photo">
-      <img
-        class="Picture-img"
-        src="F3B3EB89-F079-4EA7-9682-0309338778D0.png"
-        alt=""
-      />
-      <div class="Picture-note"><span>Dua Lipa❤️</span></div>
-    </div>
-
-    <div class="Picture hidden-photo">
-      <img
-        class="Picture-img"
-        src="B1DAB360-6248-43C3-8F19-F37FAA73132F.png"
-        alt=""
-      />
-      <div class="Picture-note"><span>Party 🎂❤️</span></div>
-    </div>
-
-    <div class="Picture hidden-photo">
-      <img
-        class="Picture-img"
-        src="19042C7F-AA8E-4839-B449-0B39758CB5CD.jpeg"
-        alt=""
-      />
-      <div class="Picture-note"><span>Hugs 💖🎂</span></div>
-    </div>
-
   </div>
 
-  <script src="./script.js"></script>
+  <div id="gallerySection" class="hidden">
+    <h2>Our Beautiful Memories ❤️</h2>
+    <p>Drag the photos anywhere you like 💕</p>
+    <div class="gallery" id="gallery"></div>
+  </div>
+
+  <div id="finalPage" class="hidden">
+    <h1>One Last Thing ❤️</h1>
+    <p class="final-note">
+      Happy Birthday, Aruna! 🎂❤️<br><br>
+      You are a beautiful part of my life.
+      I wish you endless happiness, love, and smiles.
+      May all your dreams come true. 💖
+      <br><br>
+      With love, Karthik 💕
+    </p>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const intro = document.getElementById("intro");
+    const gallerySection = document.getElementById("gallerySection");
+    const finalPage = document.getElementById("finalPage");
+    const gallery = document.getElementById("gallery");
+
+    let noCount = 0;
+
+    noBtn.addEventListener("click", () => {
+      noCount++;
+
+      if (noCount >= 5) {
+        intro.classList.add("hidden");
+        finalPage.classList.remove("hidden");
+        return;
+      }
+
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 150 - 75;
+
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    yesBtn.addEventListener("click", () => {
+      intro.classList.add("hidden");
+      gallerySection.classList.remove("hidden");
+      createGallery();
+    });
+
+    const photos = [
+      ["IMG_2495.jpeg", "Happy 🎉❤️"],
+      ["IMG_2491.jpeg", "Birthday 🎂💕"],
+      ["IMG_2496.jpeg", "Celebrate 🎉💖"],
+      ["IMG_2494.jpeg", "Gift 🎁❤️"],
+      ["IMG_2495.jpeg", "Love 💕🎈"],
+      ["IMG_2493.jpeg", "Joy ❤️🎂"],
+      ["IMG_2492.jpeg", "Fun 🎈💖"],
+      ["IMG_2490.jpeg", "Hugs 💖🎂"],
+      ["IMG_2488.jpeg", "Smile 🎉💕"],
+      ["IMG_2489.jpeg", "Yay 🎉💕"],
+      ["F3B3EB89-F079-4EA7-9682-0309338778D0.png", "Dua Lipa❤️"],
+      ["B1DAB360-6248-43C3-8F19-F37FAA73132F.png", "Party 🎂❤️"],
+      ["19042C7F-AA8E-4839-B449-0B39758CB5CD.jpeg", "Hugs 💖🎂"]
+    ];
+
+    function createGallery() {
+      gallery.innerHTML = "";
+
+      photos.forEach((photo, index) => {
+        const card = document.createElement("div");
+        card.className = "photo-card";
+
+        card.style.left = (10 + Math.random() * 55) + "%";
+        card.style.top = (20 + Math.random() * 500) + "px";
+        card.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
+        card.style.zIndex = index + 1;
+
+        card.innerHTML = `
+          <img src="${photo[0]}" alt="${photo[1]}">
+          <p>${photo[1]}</p>
+        `;
+
+        makeDraggable(card);
+        gallery.appendChild(card);
+      });
+
+      gallery.style.minHeight = Math.max(
+        900,
+        photos.length * 80
+      ) + "px";
+    }
+
+    function makeDraggable(card) {
+      let startX = 0;
+      let startY = 0;
+      let initialLeft = 0;
+      let initialTop = 0;
+
+      card.addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+
+        card.setPointerCapture(e.pointerId);
+
+        const galleryRect = gallery.getBoundingClientRect();
+        const cardRect = card.getBoundingClientRect();
+
+        startX = e.clientX;
+        startY = e.clientY;
+
+        initialLeft = cardRect.left - galleryRect.left;
+        initialTop = cardRect.top - galleryRect.top;
+
+        card.style.zIndex = Date.now();
+        card.style.cursor = "grabbing";
+
+        function move(ev) {
+          const newLeft = initialLeft + ev.clientX - startX;
+          const newTop = initialTop + ev.clientY - startY;
+
+          card.style.left = newLeft + "px";
+          card.style.top = newTop + "px";
+        }
+
+        function stop() {
+          card.style.cursor = "grab";
+          card.removeEventListener("pointermove", move);
+          card.removeEventListener("pointerup", stop);
+          card.removeEventListener("pointercancel", stop);
+        }
+
+        card.addEventListener("pointermove", move);
+        card.addEventListener("pointerup", stop);
+        card.addEventListener("pointercancel", stop);
+      });
+    }
+  </script>
+
 </body>
 </html>
