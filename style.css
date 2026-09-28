@@ -7,7 +7,8 @@
   -webkit-touch-callout: none;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   width: 100%;
   height: 100%;
@@ -16,7 +17,7 @@ html, body {
 body {
   font-family: "Caveat", cursive;
   overflow: hidden;
-  background: radial-gradient(circle at top, #494b70, #2b2d42);
+  background: #2b2d42;
 }
 
 .Container {
@@ -27,22 +28,20 @@ body {
   height: 0;
 }
 
+/* PHOTO CARDS */
+
 .Picture {
   position: absolute;
   top: 0;
   left: 0;
   width: 400px;
-  border: 5px solid #fff;
+  border: 5px solid white;
   border-radius: 4px;
   background: #f5f5dc;
-  box-shadow: 0 8px 28px rgba(0,0,0,.35);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
   transform: translate(-50%, -50%);
   cursor: grab;
-  touch-action: none;
-}
-
-.Picture:active {
-  cursor: grabbing;
+  touch-action: pan-y;
 }
 
 .Picture-img {
@@ -51,12 +50,11 @@ body {
   height: 400px;
   object-fit: cover;
   pointer-events: none;
-  -webkit-user-drag: none;
 }
 
 .Picture-note {
   min-height: 65px;
-  padding: 10px 14px;
+  padding: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,6 +63,16 @@ body {
   color: #222;
 }
 
+.swipe-hint {
+  padding: 0 10px 15px;
+  text-align: center;
+  font: 13px Arial, sans-serif;
+  color: #777;
+  letter-spacing: 1px;
+}
+
+/* QUESTION CARD */
+
 .choice-card {
   cursor: default;
 }
@@ -72,8 +80,8 @@ body {
 .choice-buttons {
   display: flex;
   justify-content: center;
-  gap: 16px;
-  padding: 0 12px 18px;
+  gap: 18px;
+  padding: 0 12px 20px;
 }
 
 .choice-buttons button {
@@ -82,8 +90,7 @@ body {
   padding: 12px 25px;
   font: bold 16px Arial, sans-serif;
   cursor: pointer;
-  box-shadow: 0 4px 12px #0003;
-  touch-action: manipulation;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 #yesBtn {
@@ -95,6 +102,8 @@ body {
   background: white;
   color: #ff1744;
 }
+
+/* YES POPUP */
 
 #yesMessage {
   position: fixed;
@@ -109,8 +118,8 @@ body {
   text-align: center;
   font: bold 22px Arial, sans-serif;
   z-index: 999999;
-  box-shadow: 0 10px 30px #0005;
-  animation: pop .3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: pop 0.3s ease;
 }
 
 [hidden] {
@@ -120,13 +129,16 @@ body {
 @keyframes pop {
   from {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(.65);
+    transform: translate(-50%, -50%) scale(0.6);
   }
+
   to {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
 }
+
+/* MOBILE */
 
 @media (max-width: 600px) {
   .Picture {
