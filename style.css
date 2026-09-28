@@ -284,3 +284,36 @@ body {
     height: 350px;
   }
 }
+/* Main frame photo */
+.main-frame-img {
+  display: block;
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Fixed and non-draggable */
+.main-frame {
+  cursor: default !important;
+  pointer-events: none !important;
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 1 !important;
+  width: 350px;
+  background: #5b3825;
+  border-color: #8a6348;
+}
+
+@media (max-width: 600px) {
+  .main-frame {
+    width: 280px;
+  }
+
+  .main-frame-img {
+    height: 350px;
+  }
+}
