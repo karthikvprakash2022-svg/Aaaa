@@ -111,14 +111,28 @@ yesBtn.addEventListener("click", () => {
 });
 
 // NO BUTTON
+// NO BUTTON: MOVE 4 TIMES WITHOUT MOVING YES
+
+let noClickCount = 0;
+
 noBtn.addEventListener("click", () => {
-  document.body.innerHTML = `
-    <div class="sad-page">
-      <div style="font-size:5rem">💔</div>
-      <h1>It's Okay...</h1>
-      <p>
+  noClickCount++;
+
+  if (noClickCount <= 4) {
+    const randomX = -(Math.random() * 35);
+    const randomY = -(Math.random() * 20);
+
+    noBtn.style.transform =
+      `translate(${randomX}px, ${randomY}px)`;
+  } else {
+    document.body.innerHTML = `
+      <div class="sad-page">
+        <div style="font-size:5rem">💔</div>
+        <h1>It's Okay...</h1>
+        <p>
       IF YOU REALLY DON'T LOVE ME,PLEASE DON'T TELL ANYONE 
       OTHERWISEEE...
+      <br>
         Maybe we were never meant to be. 😔
         <br><br>
         I will always cherish the beautiful memories
@@ -129,8 +143,9 @@ noBtn.addEventListener("click", () => {
         <br>
         Take care of yourself. ❤️
       </p>
-    </div>
-  `;
+      </div>
+    `;
+  }
 });
 
 // DRAGGING FOR REGULAR PHOTOS ONLY
