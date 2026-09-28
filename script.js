@@ -1,121 +1,63 @@
+const pictures = document.querySelectorAll(".Picture");
 
-const pictures = [...document.querySelectorAll(".Picture")];
+let previousTouch = undefined;
+let zIndexCounter = 1; // controls which photo stays on top
 
-let zIndexCounter = 1;
-let activePicture = null;
-let previousTouch = null;
-
-// Initialize stack
-pictures.forEach((picture, index) => {
-  picture.style.zIndex = index + 1;
-  picture.style.pointerEvents = "none";
-
-  const range = 100;
-  const randomX = Math.random() * (range * 2) - range;
-  const randomY = Math.random() * (range * 2) - range;
-  const randomRotate = Math.random() * (range / 2) - range / 4;
-
-  picture.style.top = `${randomY}px`;
-  picture.style.left = `${randomX}px`;
-  picture.style.transform =
-    `translate(-50%, -50%) rotate(${randomRotate}deg)`;
-});
-
-// Get the topmost card
-function getTopPicture() {
-  const visiblePictures = pictures.filter(
-    (picture) => picture.style.display !== "none"
-  );
-
-  if (!visiblePictures.length) return null;
-
-  return visiblePictures.reduce((top, picture) =>
-    Number(picture.style.zIndex) > Number(top.style.zIndex)
-      ? picture
-      : top
-  );
-}
-
-// Drag movement
 function updateElementPosition(element, event) {
   let movementX, movementY;
 
   if (event.type === "touchmove") {
     const touch = event.touches[0];
-
-    movementX = previousTouch
-      ? touch.clientX - previousTouch.clientX
-      : 0;
-
-    movementY = previousTouch
-      ? touch.clientY - previousTouch.clientY
-      : 0;
-
+    movementX = previousTouch ? touch.clientX - previousTouch.clientX : 0;
+    movementY = previousTouch ? touch.clientY - previousTouch.clientY : 0;
     previousTouch = touch;
   } else {
     movementX = event.movementX;
     movementY = event.movementY;
   }
 
-  element.style.left =
-    parseFloat(element.style.left || 0) + movementX + "px";
+  const elementY = parseInt(element.style.top || 0) + movementY;
+  const elementX = parseInt(element.style.left || 0) + movementX;
 
-  element.style.top =
-    parseFloat(element.style.top || 0) + movementY + "px";
+  element.style.top = elementY + "px";
+  element.style.left = elementX + "px";
 }
 
-// Start dragging only the top card
 function startDrag(element, event) {
-  if (element !== getTopPicture()) return;
+  element.style.zIndex = zIndexCounter++; // bring dragged photo to front
 
-  activePicture = element;
-  element.style.zIndex = zIndexCounter++;
-
-  const updateFunction = (event) => {
-    if (activePicture) {
-      updateElementPosition(activePicture, event);
-    }
-  };
-
-  const stopFunction = () => {
-    document.removeEventListener("mousemove", updateFunction);
-    document.removeEventListener("touchmove", updateFunction);
-    document.removeEventListener("mouseup", stopFunction);
-    document.removeEventListener("touchend", stopFunction);
-
-    activePicture = null;
-    previousTouch = null;
-  };
+  const updateFunction = (event) => updateElementPosition(element, event);
+  const stopFunction = () =>
+    stopDrag({ update: updateFunction, stop: stopFunction });
 
   document.addEventListener("mousemove", updateFunction);
-  document.addEventListener("touchmove", updateFunction, {
-    passive: true,
-  });
+  document.addEventListener("touchmove", updateFunction);
   document.addEventListener("mouseup", stopFunction);
   document.addEventListener("touchend", stopFunction);
 }
 
-// Attach events to all cards
+function stopDrag(functions) {
+  previousTouch = undefined;
+
+  document.removeEventListener("mousemove", functions.update);
+  document.removeEventListener("touchmove", functions.update);
+  document.removeEventListener("mouseup", functions.stop);
+  document.removeEventListener("touchend", functions.stop);
+}
+
 pictures.forEach((picture) => {
-  picture.addEventListener("mousedown", (event) =>
-    startDrag(picture, event)
-  );
+  const range = 100;
 
-  picture.addEventListener("touchstart", (event) =>
-    startDrag(picture, event)
-  );
-});
+  const randomX = Math.random() * (range * 2) - range;
+  const randomY = Math.random() * (range * 2) - range;
+  const randomRotate = Math.random() * (range / 2) - range / 4;
 
-// YES and NO buttons
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
+  const startFunction = (event) => startDrag(picture, event);
 
-yesBtn.addEventListener("click", (event) => {
-  event.stopPropagation();
-  alert("Aww ❤️ I knew it! 💕");
-});
+  picture.style.top = `${randomY}px`;
+  picture.style.left = `${randomX}px`;
+  picture.style.transform = `translate(-50%, -50%) rotate(${randomRotate}deg)`;
 
-noBtn.addEventListener("click", (event) => {
-  event.stopPropagation();
-  alert("Are you sure? 🥺💔");
+  picture.addEventListener("mousedown", startFunction);
+  picture.addEventListener("touchstart", startFunction);
 });
