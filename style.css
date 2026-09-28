@@ -228,7 +228,7 @@ body {
 }
 
 /* =========================
-   FIXED MAIN PHOTO FRAME
+   MAIN FRAME - BEHIND PHOTOS
 ========================= */
 
 #mainFrame {
@@ -244,9 +244,14 @@ body {
   transform: translate(-50%, -50%);
 
   overflow: hidden;
-  z-index: 999;
+
+  /* Main frame stays behind regular photos */
+  z-index: 1;
+
   cursor: default;
 }
+
+/* Main frame photo */
 
 .main-frame-img {
   display: block;
@@ -255,12 +260,10 @@ body {
   object-fit: cover;
 }
 
-/* =========================
-   MAIN FRAME LINKS
-========================= */
+/* Main frame links */
 
 #mainFrame .Picture-note a {
-  pointer-events: auto !important;
+  pointer-events: auto;
   position: relative;
   z-index: 99999;
   display: inline-block;
